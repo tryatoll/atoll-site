@@ -1,9 +1,9 @@
-:root{--ink:#0b2a43;--ink-2:#2f5566;--muted:#58798a;--teal:#1e86ab;--teal-2:#3fb6c2;--mist:#eaf6f6;--mist-2:#cdebea;--line:rgba(11,42,67,.10)}
+:root{--ink:#0b2a43;--ink-2:#3a5566;--muted:#3a5566;--teal:#135486;--teal-2:#2a9ec0;--mist:#e3f1ee;--mist-2:rgba(77,188,196,.28);--line:rgba(11,42,67,.10)}
 *{box-sizing:border-box}
-body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#f6fcfe;line-height:1.7;-webkit-font-smoothing:antialiased}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;color:var(--ink);background:#ffffff;line-height:1.7;-webkit-font-smoothing:antialiased}
 a{color:var(--teal)}
 .wrap{max-width:1120px;margin:0 auto;padding:0 28px}
-.nav{border-bottom:1px solid var(--line);background:rgba(246,252,254,.9)}
+.nav{border-bottom:1px solid var(--line);background:rgba(255,255,255,.9)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem;letter-spacing:-.01em;text-decoration:none;color:var(--ink)}
 .mark{width:28px;height:28px;border-radius:8px;background:url(/img/mark.png) center/cover no-repeat;display:inline-block;flex:0 0 28px}
