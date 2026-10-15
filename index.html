@@ -4,14 +4,14 @@
 <meta charset="utf-8">
 <script>document.documentElement.className+=" js"</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Atoll · Your transit card is now your phone lock</title>
-<meta name="description" content="Atoll keeps distracting apps locked during the hours you pick. Tap a transit card you already carry for a 15-minute break, then it locks itself again. Coming soon to iPhone.">
+<title>Atoll · You focus. We'll show you your day.</title>
+<meta name="description" content="Lock distracting apps with one hold. Atoll turns your phone time, sleep and workouts into one ring for the day. Coming to iPhone in December 2026.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Atoll · Your transit card is now your phone lock">
-<meta property="og:description" content="Distracting apps stay locked on your schedule. Tap a card for a 15-minute break and it locks itself again.">
+<meta property="og:title" content="Atoll · You focus. We'll show you your day.">
+<meta property="og:description" content="Hold to lock the apps that pull you away. Atoll turns your whole day into one ring.">
 <meta property="og:image" content="https://tryatoll.app/og-image.png">
 <meta property="og:url" content="https://tryatoll.app/">
-<meta name="twitter:title" content="Atoll · Your transit card is now your phone lock">
+<meta name="twitter:title" content="Atoll · You focus. We'll show you your day.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://tryatoll.app/og-image.png">
 <link rel="canonical" href="https://tryatoll.app/">
@@ -19,10 +19,10 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#072f40">
+<meta name="theme-color" content="#0b2a43">
 <style>
   :root {
-    --ink:#072f40; --ink-2:#2f5566; --muted:#58798a; --teal:#0b7fa3; --teal-2:#00b4d8; --mist:#e9f7fb; --mist-2:#cfeef7;
+    --ink:#0b2a43; --ink-2:#2f5566; --muted:#58798a; --teal:#1e86ab; --teal-2:#3fb6c2; --mist:#eaf6f6; --mist-2:#cdebea; --forest:#3f8a5c;
     --white:#fff; --line:rgba(7,47,64,.10); --dark:#06232f;
     --r:28px; --shadow:0 30px 70px -28px rgba(7,47,64,.45);
   }
@@ -35,8 +35,7 @@
   .nav{position:sticky;top:0;z-index:20;backdrop-filter:saturate(180%) blur(14px);background:rgba(246,252,254,.78);border-bottom:1px solid var(--line)}
   .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.2rem;letter-spacing:-.01em;text-decoration:none}
-  .mark{width:28px;height:28px;border-radius:9px;background:conic-gradient(from 210deg,var(--teal),var(--teal-2),var(--mist-2),var(--teal));position:relative}
-  .mark::after{content:"";position:absolute;inset:8px;border-radius:50%;background:#f6fcfe}
+  .mark{width:28px;height:28px;border-radius:8px;background:url(/img/mark.png) center/cover no-repeat;display:inline-block;flex:0 0 28px}
   .nav ul{display:flex;gap:28px;list-style:none;margin:0;padding:0}
   .nav ul a{text-decoration:none;color:var(--ink-2);font-size:.95rem}
   .nav ul a:hover{color:var(--teal)}
@@ -148,6 +147,21 @@
   .card .ic{width:44px;height:44px;border-radius:14px;background:var(--mist-2);display:grid;place-items:center;margin-bottom:16px;color:var(--teal)}
   .card h3{margin:0 0 6px;font-size:1.15rem}
   .card p{margin:0;color:var(--ink-2);font-size:.98rem}
+  /* plans */
+  .plans{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:860px;margin:0 auto}
+  .plan{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:30px}
+  .plan.pro{background:var(--dark);color:#e7f6fb;border-color:transparent}
+  .plan h3{margin:0 0 4px;font-size:1.4rem}
+  .plan .tag{color:var(--muted);margin:0 0 18px}
+  .plan.pro .tag{color:#a9cddb}
+  .plan ul{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .plan li{display:flex;gap:10px;color:var(--ink-2)}
+  .plan.pro li{color:#e7f6fb}
+  .plan li::before{content:"";flex:0 0 18px;height:18px;margin-top:3px;border-radius:50%;background:var(--mist-2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e86ab' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") center/12px no-repeat}
+  .plan.pro li::before{background-color:rgba(63,182,194,.25)}
+  .plans-note{text-align:center;color:var(--muted);margin-top:22px}
+  .share-pair{display:flex;gap:18px;justify-content:center}
+  .share-pair img{width:220px;border-radius:28px;box-shadow:var(--shadow)}
   /* faq */
   .faq{max-width:760px;margin:0 auto}
   details{background:#fff;border:1px solid var(--line);border-radius:20px;padding:20px 24px;margin-bottom:12px}
@@ -172,7 +186,8 @@
     .stage{height:560px}.stage img{width:240px}.stage .a{left:4%}.stage .b{right:4%}
     .row{grid-template-columns:minmax(0,1fr);gap:36px}.row.flip .shot{order:0}
     .shot{max-width:100%}.shot .frame{padding:24px;max-width:100%}.shot .frame img{width:100%;max-width:280px}
-    .steps,.grid{grid-template-columns:1fr}
+    .steps,.grid,.plans{grid-template-columns:1fr}
+    .share-pair img{width:44%}
     section{padding:64px 0}
   }
   @media(max-width:480px){
@@ -189,16 +204,16 @@
 <a class="skip" href="#main">Skip to content</a>
 <nav class="nav" aria-label="Main"><div class="wrap">
   <a class="brand" href="/"><span class="mark" aria-hidden="true"></span>Atoll</a>
-  <ul><li><a href="#how">How it works</a></li><li><a href="#ring">The ring</a></li><li><a href="#modes">Modes</a></li><li><a href="#faq">FAQ</a></li></ul>
+  <ul><li><a href="#how">How it works</a></li><li><a href="#ring">The ring</a></li><li><a href="#stats">Stats</a></li><li><a href="#plans">Free &amp; Pro</a></li><li><a href="#faq">FAQ</a></li></ul>
   <a class="btn primary small" href="#notify">Get notified</a>
 </div></nav>
 
 <main id="main">
 <header class="hero"><div class="wrap">
   <div>
-    <span class="pill"><i></i>Coming soon to iPhone</span>
-    <h1>Your transit card is now your <em>phone lock</em>.</h1>
-    <p class="lead">Atoll keeps your distracting apps locked during the hours you pick. Tap a card you already carry for a 15-minute break, and it locks itself again when the time is up.</p>
+    <span class="pill"><i></i>Coming to iPhone in December</span>
+    <h1>You focus. <em>We'll show you your day.</em></h1>
+    <p class="lead">Hold to lock the apps that pull you away. Atoll quietly gathers your phone time, sleep and workouts, and turns the day into one ring.</p>
     <div class="cta">
       <form class="notify" novalidate>
         <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn primary" type="submit">Get notified</button></div>
@@ -210,17 +225,17 @@
     <p class="note">Built for iPhone. Uses Apple's Screen Time framework.</p>
   </div>
   <div class="stage">
-    <img class="a" src="img/home-unlocked.webp" width="804" height="1748" alt="Atoll home screen in light mode, unlocked, with the day's 24-hour ring">
-    <img class="b" src="img/home-locked.webp" width="804" height="1748" alt="Atoll home screen in dark mode while locked, with the 24-hour ring and an Unlock button">
+    <img class="a" src="img/home-light.webp" width="804" height="1748" alt="Atoll Today screen: a 24-hour ring drawn like an atoll, with forest where you focused">
+    <img class="b" src="img/home-locked.webp" width="804" height="1748" alt="Atoll while locked: a night-sea ring, 20 minutes left and a Hold to end button">
   </div>
 </div></header>
 
 <section class="how" id="how"><div class="wrap">
-  <div class="head"><div class="eyebrow">How it works</div><h2>Locked by default. Open for a while.</h2><p class="sub">Pick your hours once. After that, the only thing you decide is when to take a break.</p></div>
+  <div class="head"><div class="eyebrow">How it works</div><h2>One hold. The rest takes care of itself.</h2><p class="sub">No schedules to plan and no timers to start. Lock when you want to focus, and Atoll fills in the rest of your day.</p></div>
   <div class="steps">
-    <div class="step"><div class="n">1</div><h3>Pick what to block</h3><p>Apps, whole categories and websites. The ones you use most this week sit at the top of the list.</p></div>
-    <div class="step"><div class="n">2</div><h3>Set your hours</h3><p>Weekday mornings, every night, whatever fits. Atoll locks when the hours start and lets go when they end. Need it sooner? Lock now works any time.</p></div>
-    <div class="step"><div class="n">3</div><h3>Tap for a break</h3><p>Touch a card you already own, or hold the button for a few seconds. You get 15 minutes, then the apps lock again without you doing a thing.</p></div>
+    <div class="step"><div class="n">1</div><h3>Pick what to block</h3><p>Apps, whole categories and websites. Games and Entertainment are in from the start, and the ones you use most sit at the top.</p></div>
+    <div class="step"><div class="n">2</div><h3>Hold to lock</h3><p>Choose 30, 60, 90 or 120 minutes, or no limit. When the time is up, your apps open again on their own.</p></div>
+    <div class="step"><div class="n">3</div><h3>See your day</h3><p>Every lock grows forest on your ring. Phone time, sleep and workouts fill in without you lifting a finger.</p></div>
   </div>
 </div></section>
 
@@ -228,38 +243,24 @@
   <div>
     <div class="eyebrow">Your day at a glance</div>
     <h2>Your whole day on one ring.</h2>
-    <p class="sub">Sleep, locked time and long stretches on your phone all sit on one 24-hour circle, so a quick look tells you how the day went.</p>
+    <p class="sub">Land is the day so far, forest is the time you focused, and gaps are long stretches on your phone. Sleep and workouts circle the outside.</p>
     <ul class="ticks">
-      <li><span><b>Always know where you stand.</b> Home shows what is locked right now, or how long until the next lock.</span></li>
-      <li><span><b>Four breaks a day.</b> That is the default. They refill each morning, so a break is something you choose, not something you drift into.</span></li>
-      <li><span><b>An emergency exit.</b> Three a month. Press it, wait 15 minutes, and your apps open until that schedule ends.</span></li>
+      <li><span><b>Tap to look closer.</b> Any part of the ring opens what happened then, down to the apps you used.</span></li>
+      <li><span><b>Sleep and workouts, already there.</b> They come straight from Apple Health.</span></li>
+      <li><span><b>Nothing to type.</b> Your phone already knows how the day went.</span></li>
     </ul>
   </div>
-  <div class="shot"><div class="frame dark"><img src="img/home-locked.webp" width="804" height="1748" alt="Locked home screen showing 42 minutes into a session" loading="lazy"></div></div>
+  <div class="shot"><div class="frame"><img src="img/ring-detail.webp" width="804" height="1748" alt="Tapping a block of forest opens a sheet: one hour of focus, goal reached" loading="lazy"></div></div>
 </div></section>
 
-<section id="modes" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap row flip">
-  <div>
-    <div class="eyebrow">Modes and schedules</div>
-    <h2>Different hours, different rules.</h2>
-    <p class="sub">A mode is a list of apps and sites to block. A schedule says when. Combine them to fit your week.</p>
-    <ul class="ticks">
-      <li><span><b>Apps and websites together.</b> A blocked app should not just move to the browser.</span></li>
-      <li><span><b>Pick from what you really use.</b> Start from your most-used apps, or block a whole category in one tap.</span></li>
-      <li><span><b>Breaks that fit you.</b> 15 minutes by default, and you can change the length and the daily limit in Settings.</span></li>
-    </ul>
-  </div>
-  <div class="shot"><div class="frame"><img src="img/modes.webp" width="804" height="1748" alt="Modes list with Default, Study, Sleep and Focus" loading="lazy"></div></div>
-</div></section>
-
-<section><div class="wrap row">
+<section id="stats" style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap row flip">
   <div>
     <div class="eyebrow">Stats</div>
-    <h2>See the hours you got back.</h2>
-    <p class="sub">Switch between week, month and year. See how long you stayed locked, how many breaks you saved and how many days you showed up.</p>
+    <h2>Watch your weeks turn into an atoll.</h2>
+    <p class="sub">Each day becomes a small island. The more you focus, the more it fills.</p>
     <ul class="ticks">
-      <li><span><b>Numbers that mean something.</b> Locked time per day, breaks saved, your longest lock and your focus days.</span></li>
-      <li><span><b>Tap any day.</b> See its ring and every lock session, scheduled or manual.</span></li>
+      <li><span><b>The numbers that matter.</b> Focus time, phone time per day and your best day, side by side.</span></li>
+      <li><span><b>Week, month and year.</b> Tap a day, a week or a month to see it up close.</span></li>
     </ul>
   </div>
   <div class="shot">
@@ -273,37 +274,58 @@
       <span class="seg-hint">Tap to switch views</span>
     </div>
     <div class="frame stack">
-      <img id="stats-week" class="on" src="img/stats-week.webp" width="804" height="1748" alt="Weekly stats: focus time this week and a 24-hour bar for each day">
-      <img id="stats-month" src="img/stats-month.webp" width="804" height="1748" alt="Monthly stats: focus time this month and a day-by-day grid" loading="lazy">
-      <img id="stats-year" src="img/stats-year.webp" width="804" height="1748" alt="Yearly stats: focus time this year and a grid for every month" loading="lazy">
+      <img id="stats-week" class="on" src="img/stats-week.webp" width="804" height="1748" alt="Weekly stats: 12 hours 40 minutes of focus and a small ring for each day">
+      <img id="stats-month" src="img/stats-month.webp" width="804" height="1748" alt="Monthly stats: a calendar where each day's ring fills with focus time" loading="lazy">
+      <img id="stats-year" src="img/stats-year.webp" width="804" height="1748" alt="Yearly stats: a small calendar for every month, greener on days you focused" loading="lazy">
     </div>
   </div>
+</div></section>
+
+<section id="share"><div class="wrap row">
+  <div>
+    <div class="eyebrow">Share</div>
+    <h2>Share your day.</h2>
+    <p class="sub">One tap turns today's ring into a clean, see-through image for your story. Your week works too.</p>
+  </div>
+  <div class="shot"><div class="share-pair"><img src="img/share-today.webp" width="720" height="1280" alt="A shared image: today's ring in white over a photo, 3 hours 25 minutes focused" loading="lazy"><img src="img/share-week.webp" width="720" height="1280" alt="A shared image: seven small rings for the week, 12 hours 40 minutes" loading="lazy"></div></div>
 </div></section>
 
 <section style="background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)"><div class="wrap">
   <div class="head"><div class="eyebrow">The details</div><h2>Small things that matter.</h2></div>
   <div class="grid">
-    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h4M7 14h2"/></svg></div><h3>A card, not a gadget</h3><p>Use a transit card, student ID or NFC sticker you already have. Atoll only reads its ID and never writes to it.</p></div>
-    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Lock now, any time</h3><p>Outside your schedule? Pick a mode and lock right away. It follows the same rules as a scheduled lock.</p></div>
-    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9h9"/></svg></div><h3>Light and dark</h3><p>Follows your iPhone, day and night.</p></div>
-    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Streaks</h3><p>Lock at least once in a day and the streak carries on.</p></div>
-    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><h3>Strict mode</h3><p>Deleting Atoll mid-lock is blocked, so you cannot dodge your own schedule. You can switch it off.</p></div>
-    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-11a7 7 0 0 1 14 0c0 6.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>Sign in with Apple</h3><p>Your modes, schedules and history live in your account, so a new phone picks up where the old one stopped.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>No schedules to set up</h3><p>Lock when you are ready. Nothing to plan ahead of time.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0"/></svg></div><h3>Ends when you say</h3><p>Need your phone? Hold for five seconds and the session ends. No questions, no guilt.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3 1-5 1-8z"/></svg></div><h3>Streaks</h3><p>Lock at least once a day and the streak carries on.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v6c0 4-3 7-7 9-4-2-7-5-7-9V6z"/></svg></div><h3>Strict mode</h3><p>Turn it on and Atoll cannot be deleted mid-lock, so you cannot dodge your own focus.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9h9"/></svg></div><h3>Day and night</h3><p>A clear sea by day, a night sea while you are locked in.</p></div>
+    <div class="card"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.5-7-11a7 7 0 0 1 14 0c0 6.5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></div><h3>Sign in with Apple</h3><p>Your history lives in your account, so a new phone picks up where the old one stopped.</p></div>
   </div>
+</div></section>
+
+<section id="plans"><div class="wrap">
+  <div class="head"><div class="eyebrow">Free &amp; Pro</div><h2>Free to start. Pro to keep it all.</h2></div>
+  <div class="plans">
+    <div class="plan"><h3>Free</h3><p class="tag">Everything you need to focus.</p><ul>
+      <li>Lock with a goal or no limit</li><li>Today's ring</li><li>Stats for the last 7 days</li><li>Your top 3 apps</li><li>Share your day in white</li><li>Lock reminders every 30 minutes</li></ul></div>
+    <div class="plan pro"><h3>Pro</h3><p class="tag">For when you want to keep every day.</p><ul>
+      <li>Everything in Free</li><li>Your full history, week to year</li><li>Share in any color</li><li>Every app you use</li><li>Set your own reminder interval</li><li>Bigger widgets (coming in January)</li></ul></div>
+  </div>
+  <p class="plans-note">Pro comes with a 7-day free trial. Pricing at launch.</p>
 </div></section>
 
 <section id="faq"><div class="wrap">
   <div class="head"><div class="eyebrow">FAQ</div><h2>Questions, answered.</h2></div>
   <div class="faq">
-    <details><summary>When is Atoll coming out?</summary><p>It is being built for iPhone now. Leave your email above and we will tell you the day it reaches the App Store.</p></details>
-    <details><summary>How is this different from Screen Time?</summary><p>Screen Time limits come with an Ignore button. Atoll asks for a card tap or a deliberate hold, gives you a fixed number of breaks a day, and locks again on its own.</p></details>
-    <details><summary>Do I need to buy NFC tags?</summary><p>No. A card you already own works, like a transit card or student ID. Holding the button also works, with no card at all.</p></details>
-    <details><summary>What if I need my phone in an emergency?</summary><p>Use the emergency unlock. You get three a month. Press it, wait 15 minutes, and your apps stay open until that schedule ends.</p></details>
+    <details><summary>When is Atoll coming out?</summary><p>We are aiming for December 2026 on iPhone. Leave your email above and we will tell you the day it reaches the App Store.</p></details>
+    <details><summary>How is this different from Screen Time?</summary><p>Screen Time sets limits. Atoll shows you the whole day: when you focused, when you drifted, how you slept and moved, all on one ring. Locking takes one hold.</p></details>
+    <details><summary>Do I need to set anything up?</summary><p>Pick the apps to block once. After that, just hold to lock when you want to focus.</p></details>
+    <details><summary>What if I need my phone?</summary><p>Hold for five seconds and the session ends, any time. With a time goal, your apps also open on their own when it is up.</p></details>
+    <details><summary>Where does my sleep data come from?</summary><p>From Apple Health, if you allow it. Without it, Atoll estimates sleep from when you put your phone down.</p></details>
     <details><summary>Which apps and sites can it block?</summary><p>Whatever you choose. Atoll uses Apple's Screen Time framework to block the apps and categories you pick, plus the websites you list.</p></details>
-    <details><summary>Is it free?</summary><p>You can start for free. A Pro plan adds more modes, schedules and history. We will share pricing closer to launch.</p></details>
+    <details><summary>Is it free?</summary><p>Yes. Free covers locking, today's ring and the last 7 days. Pro keeps your full history. See Free &amp; Pro above.</p></details>
     <details><summary>What do I need to run it?</summary><p>An iPhone on iOS 26.4 or later.</p></details>
     <details><summary>Does it work on Android?</summary><p>Not yet. iPhone comes first.</p></details>
-    <details><summary>What do you do with my data?</summary><p>We use your email only to tell you about Atoll. The details are in the <a href="/privacy/">privacy policy</a>.</p></details>
+    <details><summary>What do you do with my data?</summary><p>Your app usage stays on your iPhone. We use your email only to tell you about Atoll. The details are in the <a href="/privacy/">privacy policy</a>.</p></details>
   </div>
 </div></section>
 
@@ -324,7 +346,7 @@
 <footer><div class="wrap">
   <span class="brand"><span class="mark" aria-hidden="true"></span>Atoll</span>
   <span>© 2026 Atoll · Sydney, Australia</span>
-  <span><a href="/privacy/">Privacy</a> · <a href="/support/">Support</a> · <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a></span>
+  <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · <a href="/support/">Support</a> · <a href="mailto:hello@tryatoll.app">hello@tryatoll.app</a></span>
 </div></footer>
 <script>
 (function(){
