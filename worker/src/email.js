@@ -40,7 +40,7 @@ export const WELCOME_HTML = `<!doctype html>
     </td></tr>
     <tr><td align="center" style="padding:20px 8px 0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:12px;line-height:1.6;color:#58798a;">
       Atoll · Sydney, Australia<br>
-      <a href="https://tryatoll.app/privacy/" style="color:#58798a;">Privacy</a> &nbsp;·&nbsp; <a href="https://tryatoll.app" style="color:#58798a;">tryatoll.app</a>
+      <a href="https://tryatoll.app/privacy/" style="color:#58798a;">Privacy</a> &nbsp;·&nbsp; <a href="https://tryatoll.app/terms/" style="color:#58798a;">Terms</a> &nbsp;·&nbsp; <a href="https://tryatoll.app" style="color:#58798a;">tryatoll.app</a>
     </td></tr>
   </table>
 </td></tr>
