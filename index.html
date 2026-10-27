@@ -21,6 +21,7 @@
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#135486">
 <link rel="preload" as="image" href="/img/v2/day/h00.webp">
+<link rel="preload" as="image" href="/img/v2/day/h24.webp">
 <style>
   :root{
     /* 앱 디자인 토큰 */
@@ -34,7 +35,9 @@
   a{color:inherit} img{display:block;max-width:100%;height:auto}
   .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
   .skip{position:absolute;left:-999px}.skip:focus{left:16px;top:16px;z-index:99;background:#fff;color:var(--ink);padding:8px 12px;border-radius:8px}
-  h1,h2,h3{letter-spacing:-.025em;line-height:1.05;margin:0}
+  h1,h2,h3{letter-spacing:-.025em;line-height:1.05;margin:0;text-wrap:balance}
+  p,summary{text-wrap:pretty}
+  .lede{text-wrap:balance}
   h2{font-size:clamp(2.2rem,5.4vw,4rem);font-weight:700}
   .eyebrow{font-size:.82rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;opacity:.75;margin:0 0 14px}
   .lede{font-size:clamp(1.05rem,1.7vw,1.3rem);opacity:.85;max-width:36em;margin:18px 0 0}
@@ -56,15 +59,16 @@
   @media (max-width:820px){.nav ul{display:none}}
 
   /* 1 · 하루가 차오르는 섬 (스크롤 시퀀스) */
-  .hero{position:relative;height:190vh}
+  .hero{position:relative;height:150vh}
   .hero .stick{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
-  .hero .copy{position:absolute;top:max(84px,10vh);left:0;right:0;text-align:center;padding:0 24px}
+  .hero .copy{position:absolute;top:max(84px,10vh);left:0;right:0;text-align:center;padding:0 24px;z-index:2}
   .hero h1{font-size:clamp(2.6rem,7vw,5.6rem);font-weight:700}
-  .hero h1 span{display:block;opacity:.72}
+  .hero h1 span{display:block;color:#cde5ef}
   .stage{position:relative;width:min(84vw,58vh,600px);aspect-ratio:1;margin-top:16vh}
   .stage canvas{width:100%;height:100%;display:block}
+  @media (min-aspect-ratio:1/1){.stage{width:min(84vw,46vh,600px);margin-top:26vh}.hero h1{font-size:clamp(2.6rem,min(7vw,9vh),5.6rem)}}
   .clock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;text-shadow:0 2px 10px rgba(0,30,60,.35)}
-  .clock b{display:block;font-size:clamp(1.8rem,4.6vw,3rem);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .clock b{display:block;white-space:nowrap;font-size:clamp(1.6rem,min(4.6vw,4.8vh),3rem);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
   .clock small{font-size:.9rem;opacity:.85;font-weight:600}
   #sky{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:0}
   .legend{position:absolute;bottom:max(28px,5vh);left:0;right:0;display:flex;justify-content:center;gap:clamp(14px,4vw,40px);font-variant-numeric:tabular-nums}
@@ -132,7 +136,7 @@
   .captions p{width:clamp(104px,24vw,290px);margin:0;text-align:center;font-size:.92rem;opacity:.8}
 
   /* 5 · 군도 */
-  .week{position:relative;height:260vh;background:linear-gradient(180deg,var(--sea-hole),#0e4d7d 30%,var(--sea-outer))}
+  .week{position:relative;height:200vh;background:linear-gradient(180deg,var(--sea-hole),#0e4d7d 30%,var(--sea-outer) 75%,var(--sea-deep))}
   .week .stick{position:sticky;top:0;height:100vh;display:grid;grid-template-rows:auto 1fr;padding-top:max(96px,12vh);overflow:hidden}
   .arch{position:relative;width:min(88vw,52vh,520px);margin:0 auto;align-self:center}
   .arch .day{position:absolute;transform:translate(-50%,-50%);will-change:transform,opacity}
@@ -140,7 +144,7 @@
   .arch .day span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:clamp(.75rem,1.8vw,.95rem)}
 
   /* 6 · 공유 */
-  .share{padding:130px 0;background:linear-gradient(180deg,var(--sea-outer),var(--sea-deep))}
+  .share{padding:130px 0;background:linear-gradient(180deg,#0f4a78,#1d6f9c 50%,#0f4a78)}
   .tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-line);margin-top:28px}
   .tabs button{font:inherit;font-weight:600;font-size:.95rem;color:#fff;background:transparent;border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
   .tabs button[aria-selected=true]{background:#fff;color:var(--ink)}
@@ -160,7 +164,7 @@
   @media (max-width:560px){.bento{grid-template-columns:1fr}}
   .bento div{background:var(--glass);border:1px solid var(--glass-line);border-radius:24px;padding:24px}
   .bento h3{font-size:1.15rem;margin-bottom:8px;letter-spacing:-.01em}
-  .bento p{margin:0;opacity:.8;font-size:.95rem}
+  .bento p{margin:0;opacity:.85;font-size:1.08rem;line-height:1.5}
 
   /* 8 · 요금 */
   .plans{padding:120px 0;background:linear-gradient(180deg,var(--sea-deep),var(--sea-hole))}
@@ -203,24 +207,24 @@
 <a class="skip" href="#main">Skip to content</a>
 <nav class="nav" id="nav"><div class="wrap">
   <a class="brand" href="/"><span class="mark" aria-hidden="true"></span>Atoll</a>
-  <ul><li><a href="#lock">How it works</a></li><li><a href="#explore">Your island</a></li><li><a href="#week">Weeks</a></li><li><a href="#share">Share</a></li><li><a href="#plans">Free &amp; Pro</a></li></ul>
+  <ul><li><a href="#lock">How it works</a></li><li><a href="#share">Share</a></li><li><a href="#explore">Your island</a></li><li><a href="#week">Weeks</a></li><li><a href="#plans">Free &amp; Pro</a></li></ul>
   <a class="pill" href="#notify">Get notified</a>
 </div></nav>
 
 <main id="main">
-<!-- 1 · 스크롤하면 하루가 차오른다 -->
+<!-- 1 · 들어오면 하루가 차오른다 -->
 <section class="hero sea" id="top" aria-label="Your day grows into an island">
   <div class="stick">
     <div class="copy" id="heroCopy">
       <p class="eyebrow">Coming to iPhone in December</p>
-      <h1>You focus.<span>We'll show you your day.</span></h1>
+      <h1>You focus.<span>We'll show&nbsp;you your day.</span></h1>
     </div>
     <div class="stage" id="stage">
       <canvas id="dayCanvas" width="720" height="720" role="img" aria-label="An island whose shore fills in as the day goes on, with forest where you focused"></canvas>
       <div class="clock" aria-hidden="true"><b id="clockFocus">0m</b><small id="clockTime">12:00 AM</small></div>
     </div>
     <canvas id="sky" aria-hidden="true"></canvas>
-    <div class="scrollhint" id="hint">Scroll through a day</div>
+    <div class="scrollhint" id="hint">One day, start to finish</div>
     <div class="legend" aria-hidden="true">
       <div><small><i class="sw f"></i>Focus</small><b id="lgF">0m</b></div>
       <div><small><i class="sw p"></i>Phone</small><b id="lgP">0m</b></div>
@@ -232,11 +236,11 @@
 
 <section class="notifyband" id="notify">
   <div class="wrap reveal">
-    <h2>One island a day.</h2>
-    <p class="lede" style="margin-left:auto;margin-right:auto">Hold once to lock the apps that pull you away. Atoll gathers your phone time, sleep and workouts on its own, and grows the day into an island.</p>
+    <h2>Ever finish a day with no idea where it went?</h2>
+    <p class="lede" style="margin-left:auto;margin-right:auto">Hold once to lock the apps that pull you away. Atoll picks up your phone time, sleep and workouts on its own and turns the day into an island.</p>
     <form class="notify" novalidate>
       <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="pill" type="submit">Get notified</button></div>
-      <p class="msg" role="status" aria-live="polite">Launch news only. No spam, and we never share your email.</p>
+      <p class="msg" role="status" aria-live="polite">One email when we launch. Maybe two. Never spam, never shared.</p>
       <p class="fine"><a href="/privacy/">Privacy policy</a></p>
     </form>
   </div>
@@ -247,7 +251,7 @@
   <div class="wrap grid">
     <div class="reveal">
       <p class="eyebrow">How it works</p>
-      <h2>One hold.<br>The sea goes quiet.</h2>
+      <h2>Hold for a second.<br>Your apps go quiet.</h2>
       <p class="lede">Pick the apps that pull you away, then hold to lock. Your island turns to night while you focus, and forest grows where the time went.</p>
       <button class="hold" id="holdBtn" type="button" aria-describedby="holdNote"><span id="holdLabel">Hold 1s to lock</span></button>
       <p class="hold-note" id="holdNote">Try it. Press and hold.</p>
@@ -260,64 +264,13 @@
   </div>
 </section>
 
-<!-- 3 · 범례 -->
-<section class="explore" id="explore">
-  <div class="wrap grid">
-    <div class="isl reveal" id="exploreIsl">
-      <img src="/img/v2/day/h24.webp" alt="Your island for the day" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="focus" src="/img/v2/day/focus.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="phone" src="/img/v2/day/phone.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="sleep" src="/img/v2/day/sleep.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="workout" src="/img/v2/day/workout.webp" alt="" width="720" height="720" loading="lazy">
-    </div>
-    <div class="reveal">
-      <p class="eyebrow">Your island</p>
-      <h2>Your whole day, on one island.</h2>
-      <p class="lede">Midnight sits at the top and the day runs clockwise. Nothing to type. Your phone already knows how the day went.</p>
-      <div class="chips" role="group" aria-label="Explore the island">
-        <button class="chip" data-k="focus" aria-pressed="false"><small><i class="sw f"></i>Focus</small><b>5h 00m</b><p>Every lock grows forest. Stop early and the trees run dry, but the time still counts.</p></button>
-        <button class="chip" data-k="phone" aria-pressed="false"><small><i class="sw p"></i>Phone</small><b>2h 12m</b><p>Long stretches on your phone leave gaps in the shore.</p></button>
-        <button class="chip" data-k="sleep" aria-pressed="false"><small><i class="sw s"></i>Sleep</small><b>8h 00m</b><p>A chain of rocks offshore, from Apple Health or estimated from your phone.</p></button>
-        <button class="chip" data-k="workout" aria-pressed="false"><small><i class="sw w"></i>Workout</small><b>42m</b><p>A kayak out on the water, straight from Apple Health.</p></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 · 앱 화면 -->
-<section class="phones" id="phones">
-  <div class="wrap center reveal">
-    <p class="eyebrow">On your iPhone</p>
-    <h2>Day sea. Night sea.</h2>
-    <p class="lede">A clear sea when your apps are open, a night sea while you are locked in. Your weeks wait in Stats.</p>
-  </div>
-  <div class="fan" id="fan">
-    <div class="phone" data-tilt="-1"><img src="/img/v2/app-today.webp" alt="Today: your island with focus, phone, sleep and workouts" width="603" height="1311" loading="lazy"></div>
-    <div class="phone" data-tilt="0"><img src="/img/v2/app-locked.webp" alt="Locked: the island at night with the session time" width="603" height="1311" loading="lazy"></div>
-    <div class="phone" data-tilt="1"><img src="/img/v2/app-stats.webp" alt="Stats: a week of islands" width="603" height="1311" loading="lazy"></div>
-  </div>
-  <div class="captions"><p>Today</p><p>Locked in</p><p>Your week</p></div>
-</section>
-
-<!-- 5 · 군도 -->
-<section class="week" id="week" aria-label="Your week becomes an archipelago">
-  <div class="stick">
-    <div class="wrap center">
-      <p class="eyebrow">Stats</p>
-      <h2>Every week, an archipelago.</h2>
-      <p class="lede">Each day becomes its own island, with its own shore. Tap one to see that day up close.</p>
-    </div>
-    <div class="arch" id="arch" role="img" aria-label="Seven day islands gathered into an archipelago, Monday to Sunday"></div>
-  </div>
-</section>
-
-<!-- 6 · 공유 -->
+<!-- 2-1 · 공유 -->
 <section class="share" id="share">
   <div class="wrap center">
     <div class="reveal">
       <p class="eyebrow">Share</p>
       <h2>Share the island you made.</h2>
-      <p class="lede">Send your day as a postcard, a charm on your own photo, or the full sea. Pro adds clean stat stickers with any background.</p>
+      <p class="lede">Send it as a postcard, stick it on your own photo, or post the whole sea. Pro adds clean stat stickers on any background.</p>
       <div class="tabs" role="tablist" aria-label="Share images">
         <button role="tab" aria-selected="true" aria-controls="shareToday" id="tabToday">Today</button>
         <button role="tab" aria-selected="false" aria-controls="shareWeek" id="tabWeek">This week</button>
@@ -336,16 +289,67 @@
   </div>
 </section>
 
+<!-- 3 · 범례 -->
+<section class="explore" id="explore">
+  <div class="wrap grid">
+    <div class="isl reveal" id="exploreIsl">
+      <img src="/img/v2/day/h24.webp" alt="Your island for the day" width="720" height="720" loading="lazy">
+      <img class="hl" data-k="focus" src="/img/v2/day/focus.webp" alt="" width="720" height="720" loading="lazy">
+      <img class="hl" data-k="phone" src="/img/v2/day/phone.webp" alt="" width="720" height="720" loading="lazy">
+      <img class="hl" data-k="sleep" src="/img/v2/day/sleep.webp" alt="" width="720" height="720" loading="lazy">
+      <img class="hl" data-k="workout" src="/img/v2/day/workout.webp" alt="" width="720" height="720" loading="lazy">
+    </div>
+    <div class="reveal">
+      <p class="eyebrow">Your island</p>
+      <h2>See where your day actually went.</h2>
+      <p class="lede">Midnight's at the top and the day runs clockwise. You don't type a thing, because your phone already knows how the day went.</p>
+      <div class="chips" role="group" aria-label="Explore the island">
+        <button class="chip" data-k="focus" aria-pressed="false"><small><i class="sw f"></i>Focus</small><b>5h 00m</b><p>Every lock grows forest. Stop early and the trees run dry, but the time still counts.</p></button>
+        <button class="chip" data-k="phone" aria-pressed="false"><small><i class="sw p"></i>Phone</small><b>2h 12m</b><p>Long stretches on your phone leave gaps in the shore.</p></button>
+        <button class="chip" data-k="sleep" aria-pressed="false"><small><i class="sw s"></i>Sleep</small><b>8h 00m</b><p>A chain of rocks offshore. From Apple Health, or estimated from when you put your phone down.</p></button>
+        <button class="chip" data-k="workout" aria-pressed="false"><small><i class="sw w"></i>Workout</small><b>42m</b><p>A kayak out on the water, straight from Apple Health.</p></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · 앱 화면 -->
+<section class="phones" id="phones">
+  <div class="wrap center reveal">
+    <p class="eyebrow">On your iPhone</p>
+    <h2>The sea goes dark while you're locked in.</h2>
+    <p class="lede">The water stays clear while your apps are open and turns to night once you lock. Past weeks are waiting in Stats.</p>
+  </div>
+  <div class="fan" id="fan">
+    <div class="phone" data-tilt="-1"><img src="/img/v2/app-today.webp" alt="Today: your island with focus, phone, sleep and workouts" width="603" height="1311" loading="lazy"></div>
+    <div class="phone" data-tilt="0"><img src="/img/v2/app-locked.webp" alt="Locked: the island at night with the session time" width="603" height="1311" loading="lazy"></div>
+    <div class="phone" data-tilt="1"><img src="/img/v2/app-stats.webp" alt="Stats: a week of islands" width="603" height="1311" loading="lazy"></div>
+  </div>
+  <div class="captions"><p>Today</p><p>Locked in</p><p>Your week</p></div>
+</section>
+
+<!-- 5 · 군도 -->
+<section class="week" id="week" aria-label="Your week becomes an archipelago">
+  <div class="stick">
+    <div class="wrap center">
+      <p class="eyebrow">Stats</p>
+      <h2>Every week turns into a chain of islands.</h2>
+      <p class="lede">Each day becomes its own island, with its own shore. Tap one to see that day up close.</p>
+    </div>
+    <div class="arch" id="arch" role="img" aria-label="Seven day islands gathered into an archipelago, Monday to Sunday"></div>
+  </div>
+</section>
+
 <!-- 7 · 세부 -->
 <section class="details">
   <div class="wrap">
-    <div class="center reveal"><p class="eyebrow">The details</p><h2>Small things that matter.</h2></div>
+    <div class="center reveal"><p class="eyebrow">The details</p><h2>Built to stay out of your way.</h2></div>
     <div class="bento">
-      <div class="reveal"><h3>Nothing to plan</h3><p>No schedules or timers to set up. Lock when you are ready.</p></div>
-      <div class="reveal"><h3>Ends when you say</h3><p>Need your phone? Hold to end the session, any time. No guilt, no scores.</p></div>
-      <div class="reveal"><h3>Opens on its own</h3><p>Set a goal and your apps come back when it is up. Or choose no limit.</p></div>
-      <div class="reveal"><h3>Gentle nudges</h3><p>Scroll a blocked app for a while and Atoll suggests a lock. It never locks for you.</p></div>
-      <div class="reveal"><h3>Strict mode</h3><p>Turn it on and no app can be deleted mid-lock, so you cannot dodge your own focus.</p></div>
+      <div class="reveal"><h3>Nothing to plan</h3><p>No schedules or timers to set up. Lock when you're ready.</p></div>
+      <div class="reveal"><h3>Ends when you say</h3><p>Need your phone? Hold to end the session whenever you like. Nobody's keeping score.</p></div>
+      <div class="reveal"><h3>Opens on its own</h3><p>Set a goal and your apps come back when time's up. Or skip the goal.</p></div>
+      <div class="reveal"><h3>Gentle nudges</h3><p>Thirty minutes into a scroll? Atoll suggests a lock. It never locks for you.</p></div>
+      <div class="reveal"><h3>Strict mode</h3><p>Turn it on and apps can't be deleted mid&#8209;lock. Handy if you know yourself too well.</p></div>
       <div class="reveal"><h3>Yours alone</h3><p>Your app usage stays on your iPhone. Sleep and workouts are read, never uploaded.</p></div>
     </div>
   </div>
@@ -354,9 +358,9 @@
 <!-- 8 · 요금 -->
 <section class="plans" id="plans">
   <div class="wrap">
-    <div class="center reveal"><p class="eyebrow">Free &amp; Pro</p><h2>Free to start.<br>Pro to keep it all.</h2></div>
+    <div class="center reveal"><p class="eyebrow">Free &amp; Pro</p><h2>Free does the job.<br>Pro remembers everything.</h2></div>
     <div class="plangrid">
-      <div class="plan reveal"><h3>Free</h3><p class="sub">Everything you need to focus.</p>
+      <div class="plan reveal"><h3>Free</h3><p class="sub">Locking, today's island and a week of history.</p>
         <ul><li>Lock with a goal or no limit</li><li>Today's island</li><li>Stats for the last 7 days</li><li>Your top 3 apps</li><li>Share your island: postcards, charms, the full sea</li><li>Lock nudges every 30 minutes</li></ul></div>
       <div class="plan pro reveal"><h3>Pro</h3><p class="sub">For when you want to keep every day.</p>
         <ul><li>Everything in Free</li><li>Your full history, week to year</li><li>Clean stat stickers, any background</li><li>Every app you use</li><li>Choose your nudge interval</li><li>Bigger widgets (coming in January)</li></ul></div>
@@ -368,12 +372,12 @@
 <!-- 9 · FAQ -->
 <section class="faq" id="faq">
   <div class="wrap">
-    <div class="center reveal"><p class="eyebrow">FAQ</p><h2>Questions, answered.</h2></div>
+    <div class="center reveal"><p class="eyebrow">FAQ</p><h2>Before you ask.</h2></div>
     <div class="list">
-      <details class="reveal"><summary>When is Atoll coming out?</summary><p>We are aiming for December 2026 on iPhone. Leave your email and we will tell you the day it reaches the App Store.</p></details>
-      <details class="reveal"><summary>How is this different from Screen Time?</summary><p>Screen Time sets limits. Atoll shows you the whole day: when you focused, when you drifted, how you slept and moved, all on one island. Locking takes one hold.</p></details>
+      <details class="reveal"><summary>When is Atoll coming out?</summary><p>We're aiming for December 2026 on iPhone. Leave your email and we'll let you know the day it reaches the App Store.</p></details>
+      <details class="reveal"><summary>How is this different from Screen Time?</summary><p>Screen Time counts the scrolling. Atoll counts the whole day: when you focused, when you drifted, how you slept and moved, all on one island. Locking takes one hold.</p></details>
       <details class="reveal"><summary>Do I need to set anything up?</summary><p>Pick the apps to block once. After that, just hold to lock when you want to focus.</p></details>
-      <details class="reveal"><summary>What if I need my phone?</summary><p>Hold to end the session, any time. With a time goal, your apps also open on their own when it is up.</p></details>
+      <details class="reveal"><summary>What if I need my phone?</summary><p>Hold to end the session whenever you like. With a time goal, your apps also open on their own when time's up.</p></details>
       <details class="reveal"><summary>Where does my sleep data come from?</summary><p>From Apple Health, if you allow it. Without it, Atoll estimates sleep from when you put your phone down.</p></details>
       <details class="reveal"><summary>Which apps and sites can it block?</summary><p>Whatever you choose. Atoll uses Apple's Screen Time framework to block the apps and categories you pick, plus the websites you list.</p></details>
       <details class="reveal"><summary>Is it free?</summary><p>Yes. Free covers locking, today's island, the last 7 days and sharing your island. Pro keeps your full history and adds stat stickers.</p></details>
@@ -389,7 +393,7 @@
     <p class="lede">Coming to iPhone in December.</p>
     <form class="notify" novalidate>
       <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="pill" type="submit">Get notified</button></div>
-      <p class="msg" role="status" aria-live="polite">Launch news only. No spam, and we never share your email.</p>
+      <p class="msg" role="status" aria-live="polite">One email when we launch. Maybe two. Never spam, never shared.</p>
       <p class="fine"><a href="/privacy/">Privacy policy</a></p>
     </form>
   </div>
@@ -421,7 +425,7 @@
       if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){f.classList.add("err");msg.textContent="Please enter a valid email address.";return}
       f.classList.remove("err");f.classList.add("busy");
       fetch(API,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email:email,website:hp.value})})
-        .then(function(r){if(!r.ok)throw 0;f.classList.add("done");msg.textContent="Thanks! We will email you when Atoll launches."})
+        .then(function(r){if(!r.ok)throw 0;f.classList.add("done");msg.textContent="You're on the list. We'll email you when Atoll launches."})
         .catch(function(){f.classList.add("err");msg.textContent="Something went wrong. Please try again, or email hello@tryatoll.app."})
         .then(function(){f.classList.remove("busy")});
     });
@@ -429,22 +433,36 @@
   });
 
   var nav=$("#nav");
-  /* 1 · 하루가 차오르는 섬: 0-24시 그림 25장을 스크롤에 맞춰 넘긴다 */
-  var hero=$("#top"),cv=$("#dayCanvas"),ctx=cv.getContext("2d"),frames=[],shown=-1,want=0;
+  /* 1 · 하루가 차오르는 섬: 들어오면 잠긴 환초 위로 하루가 시계 방향으로 드러나고, 스크롤은 글자만 지운다 */
+  var hero=$("#top"),cv=$("#dayCanvas"),ctx=cv.getContext("2d"),shown=-1,want=0,intro=reduce?1:0;
   // 예시 하루(앱 로그인 화면과 같은 하루): 집중 9-11:30 · 14-16:30, 폰 12:30-13:12 · 19:30-21, 잠 0-7 · 23-24, 운동 7:30-8:12
   var F=[[9,11.5],[14,16.5]],P=[[12.5,13.2],[19.5,21]],S=[[0,7],[23,24]],W=[[7.5,8.2]];
   var upto=function(spans,h){return spans.reduce(function(t,s){return t+Math.max(0,Math.min(h,s[1])-s[0])*60},0)};
   var clockOf=function(h){var hh=Math.floor(h),mm=Math.floor((h-hh)*4)*15,ap=hh>=12?"PM":"AM",d=hh%12||12;return d+":"+(mm<10?"0":"")+mm+" "+ap};
-  var paint=function(i){var im=frames[i];if(!im.complete||!im.naturalWidth)return false;ctx.clearRect(0,0,720,720);ctx.drawImage(im,0,0,720,720);shown=i;return true};
-  for(var i=0;i<=24;i++){(function(i){var im=new Image();im.decoding="async";im.onload=function(){if(i===want&&shown!==want)paint(i)};im.src="/img/v2/day/h"+(i<10?"0":"")+i+".webp";frames.push(im)})(i)}
+  // 물에 잠긴 환초(0시) 위에 다 채운 섬(24시)을 자정(위)부터 시계 방향으로 드러낸다. 끝은 1시간 폭으로 번진다
+  var base=new Image(),full=new Image(),off=document.createElement("canvas"),ox=off.getContext("2d");off.width=off.height=720;
+  var ok=function(im){return im.complete&&im.naturalWidth};
+  var paint=function(h){if(!ok(base))return false;
+    ctx.clearRect(0,0,720,720);ctx.drawImage(base,0,0,720,720);
+    // 번지는 끝까지 자정을 넘어 이어지도록 한 바퀴보다 1시간 더 돌린다. 시작과 끝의 투명도는 선을 따라 이어 계산한다
+    var fe=1/24,u=h/24*(1+fe);
+    if(u>.001&&ok(full)){
+      if(u-fe>=1)ctx.drawImage(full,0,0,720,720);
+      else{var A=-Math.PI/2,a=function(t){return clamp((u-t)/fe,0,1)};ox.globalCompositeOperation="source-over";ox.clearRect(0,0,720,720);ox.drawImage(full,0,0,720,720);ox.globalCompositeOperation="destination-in";
+        if(ox.createConicGradient){var g=ox.createConicGradient(A,360,360),k=function(t){g.addColorStop(t,"rgba(0,0,0,"+a(t).toFixed(3)+")")};
+          k(0);if(u-fe>0)k(u-fe);if(u<1)k(u);k(1);ox.fillStyle=g;ox.fillRect(0,0,720,720)}
+        else{ox.beginPath();ox.moveTo(360,360);ox.arc(360,360,520,A,A+Math.min(1,u)*Math.PI*2);ox.closePath();ox.fillStyle="#000";ox.fill()}
+        ctx.drawImage(off,0,0)}}
+    shown=h;return true};
+  [base,full].forEach(function(im,k){im.decoding="async";im.onload=function(){paint(want)};im.src="/img/v2/day/h"+(k?"24":"00")+".webp"});
   var heroTick=function(){
-    var p=reduce?1:progress(hero),h=p*24,i=Math.round(h);
-    want=i;if(i!==shown)paint(i);
+    var sp=reduce?1:progress(hero),p=Math.max(intro,sp),h=p*24;
+    want=h;if(h!==shown)paint(h);
     $("#clockFocus").textContent=fmt(upto(F,h));
     $("#clockTime").textContent=p>=0.999?"Today's focus":clockOf(Math.min(h,23.99));
     $("#lgF").textContent=fmt(upto(F,h));$("#lgP").textContent=fmt(upto(P,h));$("#lgS").textContent=fmt(upto(S,h));$("#lgW").textContent=fmt(upto(W,h));
-    $("#heroCopy").style.opacity=String(clamp(1-p*3.2,0,1));
-    $("#hint").style.opacity=String(clamp(.8-p*8,0,.8));
+    $("#heroCopy").style.opacity=String(clamp(1-sp*3.2,0,1));
+    $("#hint").style.opacity=String(clamp(.8-sp*8,0,.8));
     sky.style.opacity=String(clamp((p-.2)*6,0,1));
   };
 
@@ -527,7 +545,7 @@
   var days=L.p.map(function(q,i){var d=document.createElement("div");d.className="day";d.style.left=(q[0]/Wd*100)+"%";d.style.top=(q[1]/L.H*100)+"%";d.style.width=(Sz/Wd*100)+"%";
     d.innerHTML='<img src="/img/v2/week/d'+(i+1)+'.webp" alt="" width="360" height="360" loading="lazy"><span aria-hidden="true">'+names[i]+'</span>';arch.appendChild(d);return d});
   var weekTick=function(){var p=reduce?1:progress(wk);
-    days.forEach(function(d,i){var s=clamp((p*1.6-i*.09)/.45,0,1),e=1-Math.pow(1-s,3),ang=i*0.9+0.4,dist=(1-e)*160;
+    days.forEach(function(d,i){var s=clamp((p*2.4+.3-i*.09)/.45,0,1),e=1-Math.pow(1-s,3),ang=i*0.9+0.4,dist=(1-e)*160;
       d.style.transform="translate(-50%,-50%) translate("+(Math.cos(ang)*dist)+"%,"+(Math.sin(ang)*dist+(1-e)*60)+"%) scale("+(.55+.45*e)+")";d.style.opacity=String(e)})};
 
   /* 6 · 공유: 탭과 기울이기 */
@@ -547,6 +565,8 @@
   var onScroll=function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){ticking=false;nav.classList.toggle("solid",scrollY>40);heroTick();fanTick();weekTick()})};
   addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);
   onScroll();
+  // 첫 화면: 0.4초 뒤 3.2초 동안 하루를 채운다(앞뒤 천천히)
+  if(!reduce){var iT0=performance.now()+400,introStep=function(now){var t=clamp((now-iT0)/3200,0,1);intro=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;heroTick();if(t<1)requestAnimationFrame(introStep)};requestAnimationFrame(introStep)}
 })();
 </script>
 <!-- Cloudflare Web Analytics -->
