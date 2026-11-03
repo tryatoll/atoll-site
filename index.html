@@ -5,10 +5,10 @@
 <script>document.documentElement.className+=" js"</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Atoll · You focus. We'll show you your day.</title>
-<meta name="description" content="Hold once to lock the apps that pull you away. Atoll grows your day into an island: focus, phone time, sleep and workouts, gathered on their own. Coming to iPhone in December 2026.">
+<meta name="description" content="Hold once to lock the apps that pull you away. Atoll turns your whole day into an island you'll actually want to post: focus, phone time, sleep and workouts, gathered on their own. Coming to iPhone in November 2026.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Atoll · You focus. We'll show you your day.">
-<meta property="og:description" content="Hold once to lock. Your whole day grows into an island.">
+<meta property="og:description" content="Hold once to lock. Your whole day grows into an island you'll want to post.">
 <meta property="og:image" content="https://tryatoll.app/og-image.png">
 <meta property="og:url" content="https://tryatoll.app/">
 <meta name="twitter:title" content="Atoll · You focus. We'll show you your day.">
@@ -20,7 +20,6 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <meta name="theme-color" content="#135486">
-<link rel="preload" as="image" href="/img/v2/day/h00.webp">
 <link rel="preload" as="image" href="/img/v2/day/h24.webp">
 <style>
   :root{
@@ -53,19 +52,27 @@
   .brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:1.15rem;text-decoration:none}
   .mark{width:28px;height:28px;border-radius:8px;background:url(/img/mark.png) center/cover no-repeat;flex:0 0 28px}
   .nav ul{display:flex;gap:26px;list-style:none;margin:0;padding:0;font-size:.92rem}
-  .nav ul a{text-decoration:none;opacity:.85}.nav ul a:hover{opacity:1}
+  .nav ul a{text-decoration:none;font-weight:600;opacity:.92}.nav ul a:hover{opacity:1}
   .pill{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-weight:600;font-size:.95rem;text-decoration:none;border:0;cursor:pointer;background:#fff;color:var(--ink);transition:transform .15s;white-space:nowrap}
   .pill:hover{transform:translateY(-1px)}
   @media (max-width:820px){.nav ul{display:none}}
 
   /* 1 · 하루가 차오르는 섬 (스크롤 시퀀스) */
-  .hero{position:relative;height:150vh}
+  .hero{position:relative;height:100vh;min-height:620px}
   .hero .stick{position:sticky;top:0;height:100vh;display:grid;place-items:center;overflow:hidden}
   .hero .copy{position:absolute;top:max(84px,10vh);left:0;right:0;text-align:center;padding:0 24px;z-index:2}
   .hero h1{font-size:clamp(2.6rem,7vw,5.6rem);font-weight:700}
+  .herosub{font-size:clamp(1rem,1.6vw,1.2rem);opacity:.92;max-width:30em;margin:16px auto 0;text-wrap:balance}
   .hero h1 span{display:block;color:#cde5ef}
   .stage{position:relative;width:min(84vw,58vh,600px);aspect-ratio:1;margin-top:16vh}
   .stage canvas{width:100%;height:100%;display:block}
+  @media (max-width:820px),(max-aspect-ratio:4/5){
+    .hero{height:auto}
+    .hero .stick{position:relative;height:auto;display:flex;flex-direction:column;align-items:center;gap:22px;padding:84px 0 44px}
+    .hero .copy{position:static;padding:34px 24px 0}
+    .hero .stage{margin-top:0;width:min(80vw,440px)}
+    .hero .legend{position:static;margin-top:8px}
+  }
   @media (min-aspect-ratio:1/1){.stage{width:min(84vw,46vh,600px);margin-top:26vh}.hero h1{font-size:clamp(2.6rem,min(7vw,9vh),5.6rem)}}
   .clock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;text-shadow:0 2px 10px rgba(0,30,60,.35)}
   .clock b{display:block;white-space:nowrap;font-size:clamp(1.6rem,min(4.6vw,4.8vh),3rem);font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
@@ -78,7 +85,6 @@
   .sw{width:9px;height:9px;border-radius:2px;display:inline-block}
   .sw.f{background:var(--forest)} .sw.p{border:1.5px dashed #fff}
   .sw.s{background:#a9c4ff;height:3px;width:13px} .sw.w{background:#fff;height:3px;width:13px}
-  .scrollhint{position:absolute;bottom:max(110px,14vh);left:50%;transform:translateX(-50%);font-size:.85rem;opacity:.8;white-space:nowrap}
 
   /* 신청 */
   .notifyband{padding:40px 0 110px;text-align:center;background:var(--sea-deep)}
@@ -93,74 +99,148 @@
   form.notify.busy .pill{opacity:.6}
   form.notify.done .row{display:none}
 
-  /* 2 · 1초 눌러 잠그기 */
-  .lock{position:relative;padding:230px 0;background:linear-gradient(180deg,var(--sea-deep),#0f4a78);isolation:isolate}
-  .lock::before{content:"";position:absolute;inset:0;z-index:-1;-webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.08) 8%,rgba(0,0,0,.28) 16%,rgba(0,0,0,.58) 24%,rgba(0,0,0,.85) 32%,#000 40%,#000 60%,rgba(0,0,0,.85) 68%,rgba(0,0,0,.58) 76%,rgba(0,0,0,.28) 84%,rgba(0,0,0,.08) 92%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.08) 8%,rgba(0,0,0,.28) 16%,rgba(0,0,0,.58) 24%,rgba(0,0,0,.85) 32%,#000 40%,#000 60%,rgba(0,0,0,.85) 68%,rgba(0,0,0,.58) 76%,rgba(0,0,0,.28) 84%,rgba(0,0,0,.08) 92%,transparent 100%);background:linear-gradient(180deg,var(--night),var(--night-2));opacity:0;transition:opacity 1.4s ease}
+  /* 화면별 설명: 폰과 글이 번갈아 나온다 */
+  .feature{position:relative;padding:130px 0;isolation:isolate}
+  .feature .grid{display:grid;grid-template-columns:minmax(270px,370px) 1fr;gap:clamp(40px,7vw,96px);align-items:center;justify-content:center}
+  .feature.flip .grid{grid-template-columns:1fr minmax(270px,370px)}
+  .feature.flip .pcol{order:2}
+  @media (max-width:880px){.feature{padding:90px 0}.feature .grid,.feature.flip .grid{grid-template-columns:1fr;gap:28px}.feature .tcol{display:contents}.feature .tcol>*{order:3}.feature .tcol>.eyebrow,.feature .tcol>h2,.feature .tcol>.lede{order:1;margin-bottom:0}.feature .pcol,.feature.flip .pcol{order:2}.feature .pf{--w:min(62vw,300px)}.feature .tcol>.tpls,.feature .tcol>.facts{margin-top:8px}}
+  .pcol{display:flex;justify-content:center}
+  .pf{--w:min(80vw,370px);width:var(--w);padding:9px;border-radius:calc((var(--w) - 18px)*.137 + 9px);background:#0b0f14;box-shadow:0 50px 90px -34px rgba(0,0,0,.75),inset 0 0 0 1.5px #2b333d}
+  .screen{position:relative;aspect-ratio:603/1311;border-radius:13.7%/6.3%;overflow:hidden;container-type:inline-size;background:#0b3a66}
+  .screen img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+  .screen img.s{opacity:0;transition:opacity .5s ease}.screen img.s.on{opacity:1}
+  .tcol .lede{margin-left:0}
+  
+
+  /* Today: 폰 안에서 눌러 잠그기 */
+  .lock{background:linear-gradient(180deg,var(--sea-deep),#0f4a78);padding:190px 0}
+  .lock::before{content:"";position:absolute;inset:0;z-index:-1;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 86%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 14%,#000 86%,transparent 100%);background:linear-gradient(180deg,var(--night),var(--night-2));opacity:0;transition:opacity 1.4s ease}
   .lock.on::before{opacity:1}
-  .lock .grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center}
-  @media (max-width:880px){.lock .grid{grid-template-columns:1fr;text-align:center}.lock .lede{margin-left:auto;margin-right:auto}}
-  .lock .isl{position:relative;width:min(100%,460px);aspect-ratio:1;margin:0 auto}
-  .lock .isl img{position:absolute;inset:0;width:100%;height:100%;transition:opacity 1s ease}
-  .lock .isl .nightimg{opacity:0}.lock.on .isl .nightimg{opacity:1}.lock.on .isl .dayimg{opacity:0}
-  .lock .isl .num{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none;text-shadow:0 2px 10px rgba(0,30,60,.35)}
-  .lock .isl .num b{display:block;font-size:clamp(1.8rem,4vw,2.6rem);font-variant-numeric:tabular-nums}
-  .lock .isl .num small{opacity:.85;font-weight:600}
-  .hold{margin-top:34px;position:relative;display:inline-flex;align-items:center;gap:10px;padding:18px 30px;border-radius:999px;border:0;font:inherit;font-weight:700;font-size:1.08rem;cursor:pointer;color:#fff;background:#0b3a66;box-shadow:0 18px 40px -18px rgba(0,0,0,.6);overflow:hidden;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:none;transition:background .6s,color .6s}
-  .lock.on .hold{background:#fff;color:var(--ink)}
-  .hold::before{content:"";position:absolute;inset:0;background:rgba(255,255,255,.26);transform-origin:left;transform:scaleX(var(--p,0))}
-  .lock.on .hold::before{background:rgba(11,58,102,.18)}
-  .hold span{position:relative}
-  .hold-note{font-size:.88rem;opacity:.75;margin:14px 0 0}
 
-  /* 3 · 범례 탐색 */
-  .explore{padding:130px 0;background:linear-gradient(180deg,#0f4a78,var(--sea-outer) 50%,var(--sea-deep))}
-  .explore .grid{display:grid;grid-template-columns:1fr 1.05fr;gap:56px;align-items:center}
-  @media (max-width:880px){.explore .grid{grid-template-columns:1fr}}
-  .explore .isl{position:relative;width:min(100%,480px);aspect-ratio:1;margin:0 auto}
-  .explore .isl img{position:absolute;inset:0;width:100%;height:100%;transition:opacity .45s ease}
-  .explore .isl img.hl{opacity:0}
-  .chips{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px}
-  @media (max-width:480px){.chips{grid-template-columns:1fr}}
-  .chip{text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--glass);border:1px solid var(--glass-line);border-radius:20px;padding:16px 18px;transition:background .2s,transform .2s}
-  .chip:hover,.chip[aria-pressed=true]{background:rgba(255,255,255,.26);transform:translateY(-2px)}
-  .chip small{display:flex;align-items:center;gap:7px;font-size:.85rem;opacity:.85}
-  .chip b{display:block;font-size:1.5rem;letter-spacing:-.02em;margin:2px 0 4px;font-variant-numeric:tabular-nums}
-  .chip p{margin:0;font-size:.9rem;opacity:.8;line-height:1.45}
+  /* 폰 화면을 웹에서 직접 그린다(402 × 874 좌표를 cqw로 옮김) */
+  .ui{position:absolute;inset:0;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Arial,sans-serif;overflow:hidden;user-select:none;-webkit-user-select:none}
+  .ui>*{position:absolute}
+  .ui .sea{inset:0;background:#3e8cad;transition:background 1.2s ease}
+  .lock.on .ui .sea{background:#09243b}
+  .ui .dim{inset:0;background:#06192b;opacity:0;transition:opacity .35s ease;pointer-events:none}
+  .ui.hl .dim{opacity:.32}.lock.on .ui.hl .dim{opacity:.18}
+  .ui .isl{left:0;top:32.338cqw;width:100%;height:100.000cqw;pointer-events:none}
+  .ui .isl img{position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity .6s ease;max-width:none}
+  .ui .isl .b-day{opacity:1}
+  .lock.on .ui .isl .b-day{opacity:0}.lock.on .ui .isl .b-night{opacity:1}
+  .ui.hl .isl .base{opacity:0!important}
+  .lock:not(.on) .ui .isl .hd.on{opacity:1}.lock.on .ui .isl .hn.on{opacity:1}
+  .ui .dyn{left:34.328cqw;top:3.483cqw;width:31.343cqw;height:9.204cqw;border-radius:4.975cqw;background:#000}
+  .ui .time{left:13.930cqw;top:7.960cqw;transform:translate(-50%,-50%);font-size:4.229cqw;font-weight:600}
+  .ui .sb{right:8.955cqw;top:5.721cqw;display:flex;gap:1.493cqw;align-items:center;height:4.478cqw}
+  .ui .sb svg{height:3.234cqw;width:auto;fill:currentColor}
+  .ui h4{margin:0;left:4.229cqw;top:17.413cqw;font-size:8.458cqw;line-height:9.950cqw;font-weight:700;letter-spacing:-.01em;text-shadow:0 1px 8px rgba(0,30,60,.25)}
+  .ui .pillb{top:18.408cqw;height:7.960cqw;border-radius:3.980cqw;background:rgba(11,58,102,.32);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;gap:1.244cqw;font-size:3.731cqw;font-weight:600}
+  .ui .streak{left:64.428cqw;width:19.900cqw}
+  .ui .shr{left:86.816cqw;width:9.204cqw;height:9.204cqw;top:17.910cqw;border-radius:50%}
+  .ui .pillb svg{height:4.229cqw;width:auto}
+  .ui .chev{top:30.100cqw;height:4.975cqw;width:auto;opacity:.95}
+  .ui .num{left:0;right:0;top:80.846cqw;transform:translateY(-50%);text-align:center;font-size:8.458cqw;font-weight:700;line-height:1.1;font-variant-numeric:tabular-nums;font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;text-shadow:0 2px 8px rgba(0,30,60,.3);transition:opacity .35s}
+  .ui .cap{left:0;right:0;top:88.806cqw;transform:translateY(-50%);text-align:center;font-size:3.234cqw;font-weight:600;opacity:.88;transition:opacity .35s}
+  .ui.hl .num,.ui.hl .cap{opacity:.22}
+  .ui .plg{left:0;right:0;top:127.363cqw;height:10.945cqw;display:flex;justify-content:center}
+  .ui .li{width:19.403cqw;text-align:center;border:0;background:none;color:inherit;font:inherit;cursor:pointer;padding:0;transition:opacity .35s}
+  .ui .li small{display:block;font-size:2.985cqw;font-weight:500;opacity:.78;line-height:5.473cqw}
+  .ui .li b{display:block;font-size:4.229cqw;font-weight:600;line-height:5.473cqw;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ui.hl .li{opacity:.38}.ui.hl .li.on{opacity:1}
+  .ui .card{left:4.229cqw;top:157.214cqw;width:91.542cqw;height:35.323cqw;border-radius:5.970cqw;background:rgba(255,255,255,.11);border:1px solid rgba(255,255,255,.26);transition:background 1s,border-color 1s}
+  .lock.on .ui .card{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.2)}
+  .ui .row{position:absolute;top:2.985cqw;display:flex;align-items:center;gap:1.493cqw;font-size:3.483cqw;font-weight:600;opacity:.95}
+  .ui .row svg{height:3.731cqw;width:auto}
+  .ui .sub{position:absolute;top:8.955cqw;font-size:3.483cqw;opacity:.8}
+  .ui .div{position:absolute;left:45.771cqw;top:3.483cqw;width:1px;height:9.950cqw;background:rgba(255,255,255,.22)}
+  .ui .arr{position:absolute;top:3.234cqw;height:3.483cqw;width:auto}
+  .ui .hold{position:absolute;left:3.483cqw;top:17.413cqw;width:84.080cqw;height:13.930cqw;border:0;padding:0;border-radius:3.483cqw;background:#0b3a66;color:#fff;font:inherit;font-size:4.975cqw;font-weight:600;display:flex;align-items:center;justify-content:center;gap:2.239cqw;cursor:pointer;touch-action:none;-webkit-tap-highlight-color:transparent;transition:background .9s,color .9s;animation:nudge 1.9s ease-in-out infinite;outline:2px solid rgba(255,255,255,.9);outline-offset:0}
+  .ui .hold svg{height:5.473cqw;width:auto}
+  .ui .hold i{position:absolute;inset:0;border-radius:inherit;background:rgba(255,255,255,.34);clip-path:inset(0 calc((1 - var(--p,0))*100%) 0 0)}
+  .lock.on .ui .hold{background:#eaf4f7;color:#0b2a43}.lock.on .ui .hold i{background:rgba(11,58,102,.2)}
+  .ui .hold span{position:relative;display:flex;align-items:center;gap:2.239cqw}
+  .ui .ml{display:none!important}.lock.on .ui .ml{display:inline-flex!important}.lock.on .ui .dl{display:none!important}
+  @keyframes nudge{0%,100%{box-shadow:0 0 0 0 rgba(255,255,255,.7),0 0 10px 0 rgba(255,255,255,.35)}50%{box-shadow:0 0 0 7px rgba(255,255,255,.28),0 0 30px 8px rgba(255,255,255,.6)}}
+  .ui .tab{left:16.169cqw;top:197.015cqw;width:67.662cqw;height:15.174cqw;border-radius:7.711cqw;background:#7ec9e8;transition:background 1s;box-shadow:0 8px 24px -10px rgba(0,30,60,.5)}
+  .lock.on .ui .tab{background:rgba(32,70,104,.95);box-shadow:inset 0 0 0 1px rgba(80,160,220,.45)}
+  .ui .ti{position:absolute;top:0.995cqw;width:21.393cqw;height:13.184cqw;border-radius:6.716cqw;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.498cqw;font-size:2.612cqw;font-weight:600;color:#0b2a43}
+  .ui .ti svg{height:6.219cqw;width:auto;fill:currentColor}
+  .ui .ti.sel{background:rgba(0,98,150,.22);color:#075a8c}
+  .lock.on .ui .ti{color:#fff}.lock.on .ui .ti.sel{background:rgba(10,45,80,.9);color:#93ffff}
 
-  /* 4 · 앱 화면 */
-  .phones{padding:120px 0 140px;background:linear-gradient(180deg,var(--sea-deep),var(--sea-hole));overflow:hidden}
-  .fan{display:flex;justify-content:center;align-items:flex-end;gap:clamp(10px,3vw,36px);margin-top:64px}
-  .phone{width:clamp(104px,24vw,290px);border-radius:clamp(18px,4vw,46px);padding:clamp(4px,.8vw,9px);background:#0b0f14;box-shadow:0 40px 80px -30px rgba(0,0,0,.7),inset 0 0 0 1.5px #2b333d;will-change:transform}
-  .phone img{border-radius:clamp(15px,3.3vw,38px);width:100%}
-  .captions{display:flex;justify-content:center;gap:clamp(10px,3vw,36px);margin-top:22px}
-  .captions p{width:clamp(104px,24vw,290px);margin:0;text-align:center;font-size:.92rem;opacity:.8}
+  .hold-note{font-size:.92rem;opacity:.8;margin:22px 0 0;display:flex;align-items:center;gap:10px}
+  .hold-note::before{content:"";width:8px;height:8px;border-radius:50%;background:#fff;opacity:.9;animation:blink 1.6s ease-in-out infinite}
+  @keyframes blink{50%{opacity:.25}}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:34px}
+  @media (max-width:520px){.facts{grid-template-columns:1fr}}
+  .fact{background:var(--glass);border:1px solid var(--glass-line);border-radius:20px;padding:16px 18px}
+  .fact{cursor:default;transition:background .2s,transform .2s,border-color .2s}
+  .fact:hover,.fact:focus-visible,.fact.on{background:rgba(255,255,255,.26);transform:translateY(-2px);outline:0}
+  .fact small img.kind{width:20px;height:20px;border-radius:50%}
+  .fact{background:var(--glass);border:1px solid var(--glass-line);border-radius:20px;padding:16px 18px}
+  .fact{cursor:default;transition:background .2s,transform .2s,border-color .2s}
+  .fact:hover,.fact:focus-visible,.fact.on{background:rgba(255,255,255,.26);transform:translateY(-2px);outline:0}
+  .fact small img.kind{width:20px;height:20px;border-radius:50%}
+  .fact small{display:flex;align-items:center;gap:7px;font-size:.85rem;opacity:.85}
+  .fact b{display:block;font-size:1.4rem;letter-spacing:-.02em;margin:2px 0 4px;font-variant-numeric:tabular-nums}
+  .fact p{margin:0;font-size:.9rem;opacity:.8;line-height:1.45}
 
-  /* 5 · 군도 */
-  .week{position:relative;height:200vh;background:linear-gradient(180deg,var(--sea-hole),#0e4d7d 30%,var(--sea-outer) 75%,var(--sea-deep))}
-  .week .stick{position:sticky;top:0;height:100vh;display:grid;grid-template-rows:auto 1fr;padding-top:max(96px,12vh);overflow:hidden}
-  .arch{position:relative;width:min(88vw,52vh,520px);margin:0 auto;align-self:center}
-  .arch .day{position:absolute;transform:translate(-50%,-50%);will-change:transform,opacity}
-  .arch .day img{width:100%}
-  .arch .day span{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:clamp(.75rem,1.8vw,.95rem)}
-
-  /* 6 · 공유 */
-  .share{padding:130px 0;background:linear-gradient(180deg,#0f4a78,#1d6f9c 50%,#0f4a78)}
-  .tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-line);margin-top:28px}
+  /* Share · Stats */
+  .share{padding:140px 0 130px;background:linear-gradient(180deg,#0f4a78,#1b6a98 45%,#1b6a98);overflow:hidden}
+  .share h2{font-size:clamp(2.4rem,6vw,4.8rem)}
+  .lock h2,.stats h2{font-size:clamp(2.2rem,4.6vw,3.7rem)}
+  .feature .tcol .lede{text-wrap:pretty;max-width:none}
+  .stats{background:linear-gradient(180deg,#1b6a98,#0f4a78 55%,var(--sea-deep));overflow:hidden}
+  .railhead{margin-top:90px}
+  .rail{position:relative;margin-top:56px;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent)}
+  .stats .rail{margin-top:30px}
+  .track{display:flex;gap:22px;width:max-content;padding:10px 0 26px;animation:slide var(--dur,40s) linear infinite}
+  .rail.rev .track{animation-direction:reverse}
+  .rail:hover .track{animation-play-state:paused}
+  @keyframes slide{to{transform:translateX(var(--shift,-50%))}}
+  .story{width:clamp(170px,19vw,236px);margin:0;flex:0 0 auto}
+  .story.lo{margin-top:36px}
+  .story img{width:100%;aspect-ratio:9/16;object-fit:cover;border-radius:26px;box-shadow:0 34px 60px -26px rgba(0,0,0,.75)}
+  .story figcaption{margin:14px 0 0;text-align:center;font-weight:600;font-size:.95rem}
+  .badge{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.2);margin-left:4px;vertical-align:1px}
+  .badge.pro{background:#fff;color:var(--ink)}
+  .views{list-style:none;margin:30px 0 0;padding:0;display:grid;gap:0;max-width:30em}
+  .views li{display:grid;grid-template-columns:5.2em 1fr;gap:14px;padding:15px 0;border-top:1px solid rgba(255,255,255,.18);font-size:1.02rem}
+  .views li:last-child{border-bottom:1px solid rgba(255,255,255,.18)}
+  .views b{font-size:1.1rem}.views span{opacity:.8}
+  .tpls[hidden]{display:none}
+  .tpls{display:grid;gap:6px;margin-top:26px;max-width:34em}
+  .tpl{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;background:transparent;border:1px solid transparent;border-radius:16px;padding:11px 16px;transition:background .2s,border-color .2s}
+  .tpl:hover{background:rgba(255,255,255,.1)}
+  .tpl[aria-pressed=true]{background:var(--glass);border-color:var(--glass-line)}
+  .tpl .n{display:block;font-weight:700;font-size:1.05rem}
+  .tpl .d{display:block;margin-top:2px;font-size:.93rem;opacity:.78;line-height:1.45}
+  .screen .sdim{position:absolute;inset:0;background:#06192b;opacity:0;transition:opacity .4s;pointer-events:none}
+  .screen .sdim.on{opacity:.38}
+  .screen img.sh{transform:translateY(100%);clip-path:inset(44.9% 0 0 0 round 9cqw 9cqw 0 0);transition:transform .5s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+  .screen img.sh.up{transform:none}
+  .cardview{position:relative;width:min(78vw,340px);aspect-ratio:9/16}
+  .cardview .cv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:28px;box-shadow:0 44px 80px -30px rgba(0,0,0,.7);opacity:0;transform:scale(.97);transition:opacity .45s ease,transform .45s ease}
+  .cardview .cv.on{opacity:1;transform:none}
+  .tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--glass);border:1px solid var(--glass-line);margin-top:26px}
   .tabs button{font:inherit;font-weight:600;font-size:.95rem;color:#fff;background:transparent;border:0;border-radius:999px;padding:9px 18px;cursor:pointer}
   .tabs button[aria-selected=true]{background:#fff;color:var(--ink)}
-  .cards{display:flex;justify-content:center;gap:clamp(14px,2.6vw,30px);margin-top:48px;perspective:1200px;flex-wrap:wrap}
-  .cards[hidden]{display:none}
-  .card{width:clamp(200px,26vw,300px);margin:0;text-align:center}
-  .card .tilt{border-radius:24px;overflow:hidden;box-shadow:0 34px 70px -30px rgba(0,0,0,.65);transition:transform .18s ease-out;will-change:transform}
-  .card figcaption{margin:16px 0 0;font-weight:600}
-  .card small{display:block;opacity:.75;font-weight:500;margin-top:2px}
-  .badge{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:999px;background:rgba(255,255,255,.2);margin-left:6px;vertical-align:2px}
-  .badge.pro{background:#fff;color:var(--ink)}
+  .tpl .n .badge{margin-left:2px}
+  .spot{position:absolute;z-index:3;border:2px solid rgba(255,255,255,.95);background:rgba(255,255,255,.06);padding:0;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s;animation:nudge 1.9s ease-in-out infinite;-webkit-tap-highlight-color:transparent}
+  .seg{position:absolute;z-index:3;border:2px solid transparent;background:none;padding:0;cursor:pointer;transition:border-color .2s}
+  .seg:hover,.seg:focus-visible{border-color:rgba(255,255,255,.7);outline:0}
+  .spot.show{opacity:1;pointer-events:auto}
+  .spot.close{transition:opacity .15s}.spot.close.show{transition:opacity .3s .5s}
+  .spot:focus-visible{outline:3px solid #fff;outline-offset:3px}
+  .fine2{font-size:.9rem;opacity:.72;margin:20px 0 0;max-width:34em}
+  @media (prefers-reduced-motion:reduce){.track{animation:none}.rail{overflow-x:auto}}
 
   /* 7 · 세부 */
   .details{padding:120px 0;background:var(--sea-deep)}
-  .bento{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
-  @media (max-width:880px){.bento{grid-template-columns:1fr 1fr}}
+  .bento{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px}
+  @media (max-width:980px){.bento{grid-template-columns:1fr 1fr}}
   @media (max-width:560px){.bento{grid-template-columns:1fr}}
   .bento div{background:var(--glass);border:1px solid var(--glass-line);border-radius:24px;padding:24px}
   .bento h3{font-size:1.15rem;margin-bottom:8px;letter-spacing:-.01em}
@@ -189,8 +269,8 @@
   details[open] summary::after{content:"–"}
   details p{opacity:.8;margin:10px 0 0}
 
-  .final{padding:120px 0 130px;background:linear-gradient(180deg,var(--sea-hole),var(--night))}
-  footer{background:var(--night);padding:30px 0 50px;font-size:.88rem;opacity:.85}
+  .final{padding:96px 0 72px;background:linear-gradient(180deg,var(--sea-hole),var(--night))}
+  footer{background:var(--night);padding:20px 0 26px;font-size:.88rem;opacity:.85}
   footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center}
 
   /* 나타나기 */
@@ -207,7 +287,7 @@
 <a class="skip" href="#main">Skip to content</a>
 <nav class="nav" id="nav"><div class="wrap">
   <a class="brand" href="/"><span class="mark" aria-hidden="true"></span>Atoll</a>
-  <ul><li><a href="#lock">How it works</a></li><li><a href="#share">Share</a></li><li><a href="#explore">Your island</a></li><li><a href="#week">Weeks</a></li><li><a href="#plans">Free &amp; Pro</a></li></ul>
+  <ul><li><a href="#today">How it works</a></li><li><a href="#share">Share</a></li><li><a href="#stats">Stats</a></li><li><a href="#plans">Free &amp; Pro</a></li></ul>
   <a class="pill" href="#notify">Get notified</a>
 </div></nav>
 
@@ -216,7 +296,7 @@
 <section class="hero sea" id="top" aria-label="Your day grows into an island">
   <div class="stick">
     <div class="copy" id="heroCopy">
-      <p class="eyebrow">Coming to iPhone in December</p>
+      <p class="eyebrow">Coming to iPhone in November</p>
       <h1>You focus.<span>We'll show&nbsp;you your day.</span></h1>
     </div>
     <div class="stage" id="stage">
@@ -224,7 +304,6 @@
       <div class="clock" aria-hidden="true"><b id="clockFocus">0m</b><small id="clockTime">12:00 AM</small></div>
     </div>
     <canvas id="sky" aria-hidden="true"></canvas>
-    <div class="scrollhint" id="hint">One day, start to finish</div>
     <div class="legend" aria-hidden="true">
       <div><small><i class="sw f"></i>Focus</small><b id="lgF">0m</b></div>
       <div><small><i class="sw p"></i>Phone</small><b id="lgP">0m</b></div>
@@ -236,8 +315,8 @@
 
 <section class="notifyband" id="notify">
   <div class="wrap reveal">
-    <h2>Ever finish a day with no idea where it went?</h2>
-    <p class="lede" style="margin-left:auto;margin-right:auto">Hold once to lock the apps that pull you away. Atoll picks up your phone time, sleep and workouts on its own and turns the day into an island.</p>
+    <h2>Your phone knows where your day went.<br>Now you can too.</h2>
+    <p class="lede" style="margin-left:auto;margin-right:auto">No logging. No spreadsheets. No guilt.</p>
     <form class="notify" novalidate>
       <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="pill" type="submit">Get notified</button></div>
       <p class="msg" role="status" aria-live="polite">One email when we launch. Maybe two. Never spam, never shared.</p>
@@ -246,98 +325,95 @@
   </div>
 </section>
 
-<!-- 2 · 1초 눌러 잠그기 -->
-<section class="lock" id="lock">
+<!-- 2 · Today: 눌러서 잠그기 -->
+<section class="feature lock" id="today">
   <div class="wrap grid">
-    <div class="reveal">
-      <p class="eyebrow">How it works</p>
+    <div class="pcol reveal">
+      <div class="pf"><div class="screen" role="group" aria-label="Atoll Today screen demo">
+      <div class="ui" id="ui">
+        <div class="sea"></div>
+        <div class="dim"></div>
+        <div class="isl"><img class="base b-day" src="/img/v2/island/day.webp" alt="" width="720" height="720"><img class="base b-night" src="/img/v2/island/night.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hd" data-k="focus" src="/img/v2/island/hl-focus.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hd" data-k="phone" src="/img/v2/island/hl-phone.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hd" data-k="sleep" src="/img/v2/island/hl-sleep.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hd" data-k="workout" src="/img/v2/island/hl-workout.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hn" data-k="focus" src="/img/v2/island/nhl-focus.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hn" data-k="phone" src="/img/v2/island/nhl-phone.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hn" data-k="sleep" src="/img/v2/island/nhl-sleep.webp" alt="" width="720" height="720" loading="lazy"><img class="hl hn" data-k="workout" src="/img/v2/island/nhl-workout.webp" alt="" width="720" height="720" loading="lazy"></div>
+        <div class="dyn"></div><div class="time">9:41</div><div class="sb"><svg viewBox="0 0 18 12" aria-hidden="true"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="5.5" width="3" height="6.5" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 17 12" aria-hidden="true"><path d="M8.5 2.2a8.6 8.6 0 0 1 6 2.4l1.2-1.3A10.4 10.4 0 0 0 8.5.4 10.4 10.4 0 0 0 1.3 3.3l1.2 1.3a8.6 8.6 0 0 1 6-2.4zm0 3.6a5 5 0 0 1 3.5 1.4l1.2-1.3a6.800 6.800 0 0 0-9.400 0L5 7.200a5 5 0 0 1 3.500-1.400zm0 3.500a1.600 1.600 0 1 0 0 3.200 1.600 1.600 0 0 0 0-3.200z"/></svg><svg viewBox="0 0 27 13" aria-hidden="true"><rect x=".5" y=".5" width="22" height="12" rx="3.500" fill="none" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="19" height="9" rx="2" fill="#5ed98a"/><path d="M24.500 4.500v4a2 2 0 0 0 0-4z" opacity=".5"/></svg></div>
+        <h4>3 Nov</h4>
+        <div class="pillb streak"><svg viewBox="0 0 24 24" fill="none" stroke="#ffb3a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3 5 5 5 10a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>1 day</div><div class="pillb shr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M7 11H6a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-1"/></svg></div>
+        <svg class="chev" style="left:4.229cqw" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 4l-8 8 8 8"/></svg><svg class="chev" style="left:90.547cqw;opacity:.35" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+        <div class="num" id="lockNum" aria-live="polite">5h 00m</div><div class="cap" id="lockCap">Today's focus</div>
+        <div class="plg"><button class="li" type="button" data-k="focus"><small>Focus</small><b id=lockFocus>5h 00m</b></button><button class="li" type="button" data-k="phone"><small>Phone</small><b>2h 12m</b></button><button class="li" type="button" data-k="sleep"><small>Sleep</small><b>8h 00m</b></button><button class="li" type="button" data-k="workout"><small>Workout</small><b>42m</b></button></div>
+        <div class="card">
+          <div class="row" style="left:3.980cqw"><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 1.5M10 2h4"/></svg></span><span class="ml"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><span id="rowL">Goal</span></div><svg class="arr" style="left:40.796cqw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+          <div class="sub" style="left:3.980cqw" id="subL">No limit</div>
+          <div class="div"></div>
+          <div class="row" style="left:51.493cqw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg>Blocking</div><svg class="arr" style="left:86.567cqw" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg>
+          <div class="sub" style="left:51.493cqw">3 sites</div>
+          <button class="hold" id="holdBtn" type="button" aria-describedby="holdNote"><i></i><span><span class="dl"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span><span class="ml"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2.5"/><path d="M8 11V8a4 4 0 0 1 7.5-2"/></svg></span><span id="holdLabel">Hold 1s to lock</span></span></button>
+        </div>
+        <div class="tab"><div class="ti sel" style="left:1.493cqw"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="4.6" stroke-linecap="round" stroke-dasharray="41 9.3" transform="rotate(-23 12 12)"/></svg>Today</div><div class="ti" style="left:23.134cqw"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="12" width="5" height="9" rx="1.500"/><rect x="9.500" y="6" width="5" height="15" rx="1.500"/><rect x="16" y="9" width="5" height="12" rx="1.500"/></svg>Stats</div><div class="ti" style="left:44.776cqw"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M10.600 2h2.800l.5 2.400 1.800.8 2.100-1.300 2 2-1.300 2.100.8 1.800 2.400.5v2.800l-2.400.5-.8 1.800 1.300 2.100-2 2-2.100-1.300-1.800.8-.5 2.400h-2.800l-.5-2.400-1.800-.8-2.100 1.300-2-2 1.300-2.100-.8-1.800L2 13.400v-2.800l2.400-.5.8-1.800L3.900 6.200l2-2 2.100 1.300 1.800-.8zM12 8.500a3.500 3.500 0 1 0 0 7 3.500 3.500 0 0 0 0-7z"/></svg>Settings</div></div>
+      </div>
+    </div></div>
+    </div>
+    <div class="tcol reveal">
+      <p class="eyebrow">Today</p>
       <h2>Hold for a second.<br>Your apps go quiet.</h2>
-      <p class="lede">Pick the apps that pull you away, then hold to lock. Your island turns to night while you focus, and forest grows where the time went.</p>
-      <button class="hold" id="holdBtn" type="button" aria-describedby="holdNote"><span id="holdLabel">Hold 1s to lock</span></button>
-      <p class="hold-note" id="holdNote">Try it. Press and hold.</p>
-    </div>
-    <div class="isl reveal">
-      <img class="dayimg" src="/img/v2/day/h24.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="nightimg" src="/img/v2/day/night.webp" alt="" width="720" height="720" loading="lazy">
-      <div class="num" aria-live="polite"><div><b id="lockNum">5h 00m</b><small id="lockCap">Today's focus</small></div></div>
+      <p class="lede">One hold, and the sea turns to night. Forest grows wherever the time went.</p>
+      <p class="hold-note" id="holdNote">Try it. Press and hold the button on the phone.</p>
+      <div class="facts">
+        <div class="fact" data-k="focus" tabindex="0"><small><img class="kind" src="/img/v2/kind/focus.webp" alt="" width="20" height="20">Focus</small><b>5h 00m</b><p>Every lock grows forest.</p></div>
+        <div class="fact" data-k="phone" tabindex="0"><small><img class="kind" src="/img/v2/kind/phone.webp" alt="" width="20" height="20">Phone</small><b>2h 12m</b><p>Long stretches leave gaps in the shore.</p></div>
+        <div class="fact" data-k="sleep" tabindex="0"><small><img class="kind" src="/img/v2/kind/sleep.webp" alt="" width="20" height="20">Sleep</small><b>8h 00m</b><p>Rocks offshore, from Apple Health.</p></div>
+        <div class="fact" data-k="workout" tabindex="0"><small><img class="kind" src="/img/v2/kind/workout.webp" alt="" width="20" height="20">Workout</small><b>42m</b><p>A kayak, straight from Apple Health.</p></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- 2-1 · 공유 -->
+<!-- 3 · Share: 서식이 흘러간다 -->
 <section class="share" id="share">
-  <div class="wrap center">
-    <div class="reveal">
-      <p class="eyebrow">Share</p>
-      <h2>Share the island you made.</h2>
-      <p class="lede">Send it as a postcard, stick it on your own photo, or post the whole sea. Pro adds clean stat stickers on any background.</p>
-      <div class="tabs" role="tablist" aria-label="Share images">
-        <button role="tab" aria-selected="true" aria-controls="shareToday" id="tabToday">Today</button>
-        <button role="tab" aria-selected="false" aria-controls="shareWeek" id="tabWeek">This week</button>
-      </div>
-    </div>
-    <div class="cards" id="shareToday" role="tabpanel" aria-labelledby="tabToday">
-      <figure class="card"><div class="tilt"><img src="/img/v2/share-postcard.webp" alt="A postcard of today's island on a photo of a desk" width="360" height="640" loading="lazy"></div><figcaption>Postcard<span class="badge">FREE</span><small>On your own photo</small></figcaption></figure>
-      <figure class="card"><div class="tilt"><img src="/img/v2/share-charm.webp" alt="Today's island as a charm with a dark rubber border" width="360" height="640" loading="lazy"></div><figcaption>Island charm<span class="badge">FREE</span><small>Follows your shoreline</small></figcaption></figure>
-      <figure class="card"><div class="tilt"><img src="/img/v2/share-ring-sunset.webp" alt="A stat ring of today's focus on a sunset background" width="360" height="640" loading="lazy"></div><figcaption>Stat ring<span class="badge pro">PRO</span><small>Any background</small></figcaption></figure>
-    </div>
-    <div class="cards" id="shareWeek" role="tabpanel" aria-labelledby="tabWeek" hidden>
-      <figure class="card"><div class="tilt"><img src="/img/v2/share-week-postcard.webp" alt="A sea-chart postcard of the week's islands with a dotted route" width="360" height="640" loading="lazy"></div><figcaption>Sea chart<span class="badge">FREE</span><small>The week you sailed</small></figcaption></figure>
-      <figure class="card"><div class="tilt"><img src="/img/v2/share-week-island.webp" alt="The week's archipelago on the sea" width="360" height="640" loading="lazy"></div><figcaption>Archipelago<span class="badge">FREE</span><small>Seven islands, one sea</small></figcaption></figure>
-      <figure class="card"><div class="tilt"><img src="/img/v2/share-week-ring-sea.webp" alt="A week ring split into seven days on a deep sea background" width="360" height="640" loading="lazy"></div><figcaption>Week ring<span class="badge pro">PRO</span><small>Any background</small></figcaption></figure>
-    </div>
-  </div>
-</section>
-
-<!-- 3 · 범례 -->
-<section class="explore" id="explore">
-  <div class="wrap grid">
-    <div class="isl reveal" id="exploreIsl">
-      <img src="/img/v2/day/h24.webp" alt="Your island for the day" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="focus" src="/img/v2/day/focus.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="phone" src="/img/v2/day/phone.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="sleep" src="/img/v2/day/sleep.webp" alt="" width="720" height="720" loading="lazy">
-      <img class="hl" data-k="workout" src="/img/v2/day/workout.webp" alt="" width="720" height="720" loading="lazy">
-    </div>
-    <div class="reveal">
-      <p class="eyebrow">Your island</p>
-      <h2>See where your day actually went.</h2>
-      <p class="lede">Midnight's at the top and the day runs clockwise. You don't type a thing, because your phone already knows how the day went.</p>
-      <div class="chips" role="group" aria-label="Explore the island">
-        <button class="chip" data-k="focus" aria-pressed="false"><small><i class="sw f"></i>Focus</small><b>5h 00m</b><p>Every lock grows forest. Stop early and the trees run dry, but the time still counts.</p></button>
-        <button class="chip" data-k="phone" aria-pressed="false"><small><i class="sw p"></i>Phone</small><b>2h 12m</b><p>Long stretches on your phone leave gaps in the shore.</p></button>
-        <button class="chip" data-k="sleep" aria-pressed="false"><small><i class="sw s"></i>Sleep</small><b>8h 00m</b><p>A chain of rocks offshore. From Apple Health, or estimated from when you put your phone down.</p></button>
-        <button class="chip" data-k="workout" aria-pressed="false"><small><i class="sw w"></i>Workout</small><b>42m</b><p>A kayak out on the water, straight from Apple Health.</p></button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 4 · 앱 화면 -->
-<section class="phones" id="phones">
   <div class="wrap center reveal">
-    <p class="eyebrow">On your iPhone</p>
-    <h2>The sea goes dark while you're locked in.</h2>
-    <p class="lede">The water stays clear while your apps are open and turns to night once you lock. Past weeks are waiting in Stats.</p>
+    <p class="eyebrow">Share</p>
+    <h2>A screen&#8209;time screenshot<br>worth posting.</h2>
+    <p class="lede">Tap share and your day becomes a story you\'d actually post.</p>
   </div>
-  <div class="fan" id="fan">
-    <div class="phone" data-tilt="-1"><img src="/img/v2/app-today.webp" alt="Today: your island with focus, phone, sleep and workouts" width="603" height="1311" loading="lazy"></div>
-    <div class="phone" data-tilt="0"><img src="/img/v2/app-locked.webp" alt="Locked: the island at night with the session time" width="603" height="1311" loading="lazy"></div>
-    <div class="phone" data-tilt="1"><img src="/img/v2/app-stats.webp" alt="Stats: a week of islands" width="603" height="1311" loading="lazy"></div>
-  </div>
-  <div class="captions"><p>Today</p><p>Locked in</p><p>Your week</p></div>
+  <div class="rail" aria-label="Daily share styles"><div class="track"><figure class="story"><img src="/img/v2/card-dayIsland.webp" alt="Island share style" width="540" height="960" loading="lazy"><figcaption>Island <span class="badge">FREE</span></figcaption></figure><figure class="story"><img src="/img/v2/card-dayPostcard.webp" alt="Postcard share style" width="540" height="960" loading="lazy"><figcaption>Postcard <span class="badge">FREE</span></figcaption></figure><figure class="story"><img src="/img/v2/card-dayCharm.webp" alt="Charm share style" width="540" height="960" loading="lazy"><figcaption>Charm <span class="badge">FREE</span></figcaption></figure><figure class="story"><img src="/img/v2/card-dayRings.webp" alt="Rings share style" width="540" height="960" loading="lazy"><figcaption>Rings <span class="badge pro">PRO</span></figcaption></figure><figure class="story"><img src="/img/v2/card-dayBox.webp" alt="Box share style" width="540" height="960" loading="lazy"><figcaption>Box <span class="badge pro">PRO</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-dayIsland.webp" alt="" data-x="Island share style" width="540" height="960" loading="lazy"><figcaption>Island <span class="badge">FREE</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-dayPostcard.webp" alt="" data-x="Postcard share style" width="540" height="960" loading="lazy"><figcaption>Postcard <span class="badge">FREE</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-dayCharm.webp" alt="" data-x="Charm share style" width="540" height="960" loading="lazy"><figcaption>Charm <span class="badge">FREE</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-dayRings.webp" alt="" data-x="Rings share style" width="540" height="960" loading="lazy"><figcaption>Rings <span class="badge pro">PRO</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-dayBox.webp" alt="" data-x="Box share style" width="540" height="960" loading="lazy"><figcaption>Box <span class="badge pro">PRO</span></figcaption></figure></div></div>
 </section>
 
-<!-- 5 · 군도 -->
-<section class="week" id="week" aria-label="Your week becomes an archipelago">
-  <div class="stick">
-    <div class="wrap center">
+<!-- 4 · Stats -->
+<section class="feature flip stats" id="stats">
+  <div class="wrap grid">
+    <div class="tcol reveal">
       <p class="eyebrow">Stats</p>
-      <h2>Every week turns into a chain of islands.</h2>
-      <p class="lede">Each day becomes its own island, with its own shore. Tap one to see that day up close.</p>
+      <h2>Seven days.<br>Seven islands.</h2>
+      <p class="lede">Every day gets its own island, so a week reads at a glance.</p>
+      <div class="tpls" role="group" aria-label="Stats screens">
+        <button class="tpl" type="button" aria-pressed="true"><span class="n">Week</span><span class="d">Focus per day, against last week.</span></button>
+        <button class="tpl" type="button" aria-pressed="false"><span class="n">Month</span><span class="d">A calendar of rings.</span></button>
+        <button class="tpl" type="button" aria-pressed="false"><span class="n">Year</span><span class="d">The whole year as a heatmap.</span></button>
+      </div>
+      <p class="hold-note" id="statsNote">Tap the glowing spot on the phone.</p>
     </div>
-    <div class="arch" id="arch" role="img" aria-label="Seven day islands gathered into an archipelago, Monday to Sunday"></div>
+    <div class="pcol reveal">
+      <div class="pf"><div class="screen">
+        <img class="s on" src="/img/v2/st-week.webp" alt="Stats Week: seven day islands and the change from last week" width="603" height="1311" loading="lazy">
+        <img class="s" src="/img/v2/st-month.webp" alt="Stats Month: a calendar of rings" width="603" height="1311" loading="lazy">
+        <img class="s" src="/img/v2/st-year.webp" alt="Stats Year: a heatmap of the whole year" width="603" height="1311" loading="lazy">
+        <div class="sdim"></div>
+        <img class="sh" src="/img/v2/st-day.webp" alt="A day sheet with the island, totals and a timeline" width="603" height="1311" loading="lazy">
+        <img class="sh" src="/img/v2/st-weeksheet.webp" alt="A week sheet with its seven islands" width="603" height="1311" loading="lazy">
+        <img class="sh" src="/img/v2/st-monthsheet.webp" alt="A month sheet with its calendar" width="603" height="1311" loading="lazy">
+        <button class="spot" data-b="0" type="button" aria-label="Open Thursday 29 Oct" style="left:72.637cqw;top:88.060cqw;width:20.896cqw;height:20.896cqw;border-radius:50%"></button>
+        <button class="spot" data-b="1" type="button" aria-label="Open the week of 26 Oct" style="left:6.965cqw;top:143.781cqw;width:86.567cqw;height:8.955cqw;border-radius:4.478cqw"></button>
+        <button class="spot" data-b="2" type="button" aria-label="Open October" style="left:9.950cqw;top:162.189cqw;width:27.861cqw;height:22.886cqw;border-radius:3.483cqw"></button>
+        <button class="seg" data-s="0" type="button" aria-label="Show Week" style="left:4.478cqw;top:31.095cqw;width:30.348cqw;height:8.458cqw;border-radius:4.229cqw"></button>
+        <button class="seg" data-s="1" type="button" aria-label="Show Month" style="left:34.826cqw;top:31.095cqw;width:30.348cqw;height:8.458cqw;border-radius:4.229cqw"></button>
+        <button class="seg" data-s="2" type="button" aria-label="Show Year" style="left:65.174cqw;top:31.095cqw;width:30.348cqw;height:8.458cqw;border-radius:4.229cqw"></button>
+        <button class="spot close" type="button" aria-label="Close the sheet" style="left:5.473cqw;top:101.244cqw;width:11.443cqw;height:11.443cqw;border-radius:50%"></button>
+      </div></div>
+    </div>
   </div>
+  <div class="wrap center reveal railhead">
+    <p class="eyebrow">And share the whole week</p>
+  </div>
+  <div class="rail rev" aria-label="Weekly share styles"><div class="track"><figure class="story"><img src="/img/v2/card-weekArchipelago.webp" alt="Archipelago share style" width="540" height="960" loading="lazy"><figcaption>Archipelago <span class="badge">FREE</span></figcaption></figure><figure class="story"><img src="/img/v2/card-weekMap.webp" alt="Sea chart share style" width="540" height="960" loading="lazy"><figcaption>Sea chart <span class="badge">FREE</span></figcaption></figure><figure class="story"><img src="/img/v2/card-weekRings.webp" alt="Rings share style" width="540" height="960" loading="lazy"><figcaption>Rings <span class="badge pro">PRO</span></figcaption></figure><figure class="story"><img src="/img/v2/card-weekRing.webp" alt="Week ring share style" width="540" height="960" loading="lazy"><figcaption>Week ring <span class="badge pro">PRO</span></figcaption></figure><figure class="story"><img src="/img/v2/card-weekBox.webp" alt="Box share style" width="540" height="960" loading="lazy"><figcaption>Box <span class="badge pro">PRO</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-weekArchipelago.webp" alt="" data-x="Archipelago share style" width="540" height="960" loading="lazy"><figcaption>Archipelago <span class="badge">FREE</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-weekMap.webp" alt="" data-x="Sea chart share style" width="540" height="960" loading="lazy"><figcaption>Sea chart <span class="badge">FREE</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-weekRings.webp" alt="" data-x="Rings share style" width="540" height="960" loading="lazy"><figcaption>Rings <span class="badge pro">PRO</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-weekRing.webp" alt="" data-x="Week ring share style" width="540" height="960" loading="lazy"><figcaption>Week ring <span class="badge pro">PRO</span></figcaption></figure><figure class="story" aria-hidden="true"><img src="/img/v2/card-weekBox.webp" alt="" data-x="Box share style" width="540" height="960" loading="lazy"><figcaption>Box <span class="badge pro">PRO</span></figcaption></figure></div></div>
 </section>
 
 <!-- 7 · 세부 -->
@@ -345,12 +421,10 @@
   <div class="wrap">
     <div class="center reveal"><p class="eyebrow">The details</p><h2>Built to stay out of your way.</h2></div>
     <div class="bento">
-      <div class="reveal"><h3>Nothing to plan</h3><p>No schedules or timers to set up. Lock when you're ready.</p></div>
-      <div class="reveal"><h3>Ends when you say</h3><p>Need your phone? Hold to end the session whenever you like. Nobody's keeping score.</p></div>
-      <div class="reveal"><h3>Opens on its own</h3><p>Set a goal and your apps come back when time's up. Or skip the goal.</p></div>
-      <div class="reveal"><h3>Gentle nudges</h3><p>Thirty minutes into a scroll? Atoll suggests a lock. It never locks for you.</p></div>
-      <div class="reveal"><h3>Strict mode</h3><p>Turn it on and apps can't be deleted mid&#8209;lock. Handy if you know yourself too well.</p></div>
-      <div class="reveal"><h3>Yours alone</h3><p>Your app usage stays on your iPhone. Sleep and workouts are read, never uploaded.</p></div>
+      <div class="reveal"><h3>Nothing to plan</h3><p>No schedules or timers. Just lock.</p></div>
+      <div class="reveal"><h3>Ends when you say</h3><p>Hold to end any time, or let your goal do it. Nobody's keeping score.</p></div>
+      <div class="reveal"><h3>Gentle nudges</h3><p>A suggestion after 30 minutes of scrolling. Never a lock.</p></div>
+      <div class="reveal"><h3>Yours alone</h3><p>App usage stays on your iPhone.</p></div>
     </div>
   </div>
 </section>
@@ -363,9 +437,9 @@
       <div class="plan reveal"><h3>Free</h3><p class="sub">Locking, today's island and a week of history.</p>
         <ul><li>Lock with a goal or no limit</li><li>Today's island</li><li>Stats for the last 7 days</li><li>Your top 3 apps</li><li>Share your island: postcards, charms, the full sea</li><li>Lock nudges every 30 minutes</li></ul></div>
       <div class="plan pro reveal"><h3>Pro</h3><p class="sub">For when you want to keep every day.</p>
-        <ul><li>Everything in Free</li><li>Your full history, week to year</li><li>Clean stat stickers, any background</li><li>Every app you use</li><li>Choose your nudge interval</li><li>Bigger widgets (coming in January)</li></ul></div>
+        <ul><li>Everything in Free</li><li>Your full history, week to year</li><li>Clean stat stickers that sit on any photo</li><li>Every app you use</li><li>Choose your nudge interval</li><li>Bigger widgets (coming in January)</li></ul></div>
     </div>
-    <p class="plannote">Pro comes with a 7-day free trial. Pricing at launch.</p>
+    <p class="plannote">Pro starts with a 7-day free trial: $24.99 a year or $6.99 a month. Or buy it once for <b>$19.99</b> until December 31, then $39.99.</p>
   </div>
 </section>
 
@@ -374,23 +448,24 @@
   <div class="wrap">
     <div class="center reveal"><p class="eyebrow">FAQ</p><h2>Before you ask.</h2></div>
     <div class="list">
-      <details class="reveal"><summary>When is Atoll coming out?</summary><p>We're aiming for December 2026 on iPhone. Leave your email and we'll let you know the day it reaches the App Store.</p></details>
-      <details class="reveal"><summary>How is this different from Screen Time?</summary><p>Screen Time counts the scrolling. Atoll counts the whole day: when you focused, when you drifted, how you slept and moved, all on one island. Locking takes one hold.</p></details>
-      <details class="reveal"><summary>Do I need to set anything up?</summary><p>Pick the apps to block once. After that, just hold to lock when you want to focus.</p></details>
-      <details class="reveal"><summary>What if I need my phone?</summary><p>Hold to end the session whenever you like. With a time goal, your apps also open on their own when time's up.</p></details>
-      <details class="reveal"><summary>Where does my sleep data come from?</summary><p>From Apple Health, if you allow it. Without it, Atoll estimates sleep from when you put your phone down.</p></details>
-      <details class="reveal"><summary>Which apps and sites can it block?</summary><p>Whatever you choose. Atoll uses Apple's Screen Time framework to block the apps and categories you pick, plus the websites you list.</p></details>
-      <details class="reveal"><summary>Is it free?</summary><p>Yes. Free covers locking, today's island, the last 7 days and sharing your island. Pro keeps your full history and adds stat stickers.</p></details>
-      <details class="reveal"><summary>What do I need to run it?</summary><p>An iPhone on iOS 26.4 or later. Android is not planned yet.</p></details>
-      <details class="reveal"><summary>What do you do with my data?</summary><p>Your app usage stays on your iPhone. We use your email only to tell you about Atoll. The details are in the <a href="/privacy/">privacy policy</a>.</p></details>
+      <details class="reveal"><summary>When is Atoll coming out?</summary><p>We're aiming for November 2026 on iPhone. Leave your email and we'll tell you the day.</p></details>
+      <details class="reveal"><summary>How is this different from Screen Time?</summary><p>Screen Time counts the scrolling. Atoll shows the whole day on one island, and locking takes one hold.</p></details>
+      <details class="reveal"><summary>Will it make me feel bad about my day?</summary><p>No scores, no guilt trips. Atoll shows the day as it was.</p></details>
+      <details class="reveal"><summary>Do I need to set anything up?</summary><p>Pick the apps to block once. After that, just hold to lock.</p></details>
+      <details class="reveal"><summary>What if I need my phone?</summary><p>Hold to end whenever you like. With a goal, your apps also open when time is up.</p></details>
+      <details class="reveal"><summary>Where does my sleep data come from?</summary><p>Apple Health, if you allow it. Without it, Atoll estimates from when you put your phone down.</p></details>
+      <details class="reveal"><summary>Which apps and sites can it block?</summary><p>Whatever you choose, through Apple's Screen Time framework, plus the sites you list.</p></details>
+      <details class="reveal"><summary>Is it free?</summary><p>Yes. Free covers locking, today, the last 7 days and sharing. Pro adds full history and stat stickers.</p></details>
+      <details class="reveal"><summary>What do I need to run it?</summary><p>An iPhone on iOS 26.4 or later.</p></details>
+      <details class="reveal"><summary>What do you do with my data?</summary><p>Usage stays on your iPhone. We use your email only to tell you about Atoll. See the <a href="/privacy/">privacy policy</a>.</p></details>
     </div>
   </div>
 </section>
 
 <section class="final center">
   <div class="wrap reveal">
-    <h2>Grow your first island.</h2>
-    <p class="lede">Coming to iPhone in December.</p>
+    <h2>Go make your first island.</h2>
+    <p class="lede">Coming to iPhone in November.</p>
     <form class="notify" novalidate>
       <div class="row"><input type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required><input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="pill" type="submit">Get notified</button></div>
       <p class="msg" role="status" aria-live="polite">One email when we launch. Maybe two. Never spam, never shared.</p>
@@ -434,7 +509,7 @@
 
   var nav=$("#nav");
   /* 1 · 하루가 차오르는 섬: 들어오면 잠긴 환초 위로 하루가 시계 방향으로 드러나고, 스크롤은 글자만 지운다 */
-  var hero=$("#top"),cv=$("#dayCanvas"),ctx=cv.getContext("2d"),shown=-1,want=0,intro=reduce?1:0;
+  var hero=$("#top"),cv=$("#dayCanvas"),ctx=cv.getContext("2d"),shown=-1,want=0;
   // 예시 하루(앱 로그인 화면과 같은 하루): 집중 9-11:30 · 14-16:30, 폰 12:30-13:12 · 19:30-21, 잠 0-7 · 23-24, 운동 7:30-8:12
   var F=[[9,11.5],[14,16.5]],P=[[12.5,13.2],[19.5,21]],S=[[0,7],[23,24]],W=[[7.5,8.2]];
   var upto=function(spans,h){return spans.reduce(function(t,s){return t+Math.max(0,Math.min(h,s[1])-s[0])*60},0)};
@@ -456,13 +531,12 @@
     shown=h;return true};
   [base,full].forEach(function(im,k){im.decoding="async";im.onload=function(){paint(want)};im.src="/img/v2/day/h"+(k?"24":"00")+".webp"});
   var heroTick=function(){
-    var sp=reduce?1:progress(hero),p=Math.max(intro,sp),h=p*24;
+    var sp=0,p=1,h=24;
     want=h;if(h!==shown)paint(h);
     $("#clockFocus").textContent=fmt(upto(F,h));
     $("#clockTime").textContent=p>=0.999?"Today's focus":clockOf(Math.min(h,23.99));
     $("#lgF").textContent=fmt(upto(F,h));$("#lgP").textContent=fmt(upto(P,h));$("#lgS").textContent=fmt(upto(S,h));$("#lgW").textContent=fmt(upto(W,h));
     $("#heroCopy").style.opacity=String(clamp(1-sp*3.2,0,1));
-    $("#hint").style.opacity=String(clamp(.8-sp*8,0,.8));
     sky.style.opacity=String(clamp((p-.2)*6,0,1));
   };
 
@@ -499,15 +573,18 @@
   sizeSky();addEventListener("resize",sizeSky);
   if(reduce){var still=function(){drawSky(8)};boatF.concat(birdF).forEach(function(im){im.onload=still})}else requestAnimationFrame(skyLoop);
 
-  /* 2 · 1초 눌러 잠그기(데모) */
-  var lock=$("#lock"),btn=$("#holdBtn"),label=$("#holdLabel"),raf=0,t0=0,locked=false,timer=null,lockedAt=0;
+  /* 2 · Today: 폰 화면은 웹에서 직접 그린다. 숫자는 글자라서 잠금 중에 같이 늘어난다 */
+  var lock=$("#today"),ui=$("#ui"),btn=$("#holdBtn"),holdLabel=$("#holdLabel"),raf=0,t0=0,locked=false,timer=null,lockedAt=0,total=300,added=0;
   var setP=function(v){btn.style.setProperty("--p",v)};
   var holdMs=function(){return locked?1500:1000};
-  var tickLock=function(){if(!locked)return;var s=Math.floor((Date.now()-lockedAt)/1000*60);$("#lockNum").textContent=Math.floor(s/60)+"m "+(s%60<10?"0":"")+(s%60)+"s"};
-  var toggle=function(){
+  var showFocus=function(m){var t=fmt(m);$("#lockFocus").textContent=t;var f=document.querySelector(".fact b");if(f)f.textContent=t};
+  // 데모에서는 시간이 60배로 흐른다(실제 1초가 화면의 1분). 1시간 목표를 채우면 저절로 풀린다
+  var elapsed=function(){return Math.min(3600,Math.floor((Date.now()-lockedAt)/1000*60))};
+  var tickLock=function(){if(!locked)return;var e=elapsed();if(e>=3600){added=60;showFocus(total+added);toggle(true);return}var m=Math.floor(e/60),sec=e%60;added=m;$("#lockNum").textContent=m+"m "+(sec<10?"0":"")+sec+"s";showFocus(total+added)};
+  var toggle=function(auto){
     locked=!locked;lock.classList.toggle("on",locked);
-    if(locked){lockedAt=Date.now();var end=new Date(Date.now()+60*60000);$("#lockCap").textContent="until "+end.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});label.textContent="Hold to end";$("#holdNote").textContent="Locked. The apps you picked stay closed.";timer=setInterval(tickLock,250);tickLock()}
-    else{clearInterval(timer);$("#lockNum").textContent="5h 00m";$("#lockCap").textContent="Today's focus";label.textContent="Hold 1s to lock";$("#holdNote").textContent="Try it. Press and hold."}
+    if(locked){lockedAt=Date.now();added=0;var end=new Date(Date.now()+60*60000);$("#lockCap").textContent="until "+end.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});$("#rowL").textContent="Focusing";$("#subL").textContent="60m";holdLabel.textContent="Hold to end";$("#holdNote").textContent="Locked. Time runs 60x faster here. It ends by itself.";btn.setAttribute("aria-label","Hold to end");timer=setInterval(tickLock,100);tickLock()}
+    else{clearInterval(timer);total+=added;added=0;$("#lockNum").textContent=fmt(total);$("#lockCap").textContent="Today's focus";$("#rowL").textContent="Goal";$("#subL").textContent="No limit";holdLabel.textContent="Hold 1s to lock";showFocus(total);$("#holdNote").textContent=auto===true?"Time's up. Your apps opened on their own.":"Done. The time is on the island.";btn.setAttribute("aria-label","Hold to lock")}
     if(navigator.vibrate)navigator.vibrate(18);
   };
   var step=function(){var v=(performance.now()-t0)/holdMs();setP(clamp(v,0,1));if(v>=1){raf=0;setP(0);toggle();return}raf=requestAnimationFrame(step)};
@@ -518,43 +595,55 @@
   btn.addEventListener("keyup",function(e){if(e.key===" "||e.key==="Enter")stop()});
   btn.addEventListener("contextmenu",function(e){e.preventDefault()});
 
-  /* 3 · 범례 칩: 올리면 미리보기, 누르면 고정 */
-  var chips=[].slice.call(document.querySelectorAll(".chip")),hls=[].slice.call(document.querySelectorAll("#exploreIsl .hl")),pinned=null;
-  var show=function(k){hls.forEach(function(im){im.style.opacity=im.dataset.k===k?1:0});chips.forEach(function(c){c.setAttribute("aria-pressed",String(pinned!==null&&c.dataset.k===pinned))})};
-  chips.forEach(function(c){
-    c.addEventListener("mouseenter",function(){if(!pinned)show(c.dataset.k)});
-    c.addEventListener("mouseleave",function(){if(!pinned)show(null)});
-    c.addEventListener("click",function(){pinned=pinned===c.dataset.k?null:c.dataset.k;show(pinned)});
+  /* 범례(폰 안 · 오른쪽 카드)에 올리면 앱처럼 섬에서 그 자리를 강조한다. 낮 · 밤 그림이 따로 있다 */
+  var hls=[].slice.call(document.querySelectorAll(".isl .hl")),keys=[].slice.call(document.querySelectorAll(".fact,.li")),hlPin=null;
+  var showHl=function(k){ui.classList.toggle("hl",!!k);hls.forEach(function(im){im.classList.toggle("on",im.dataset.k===k)});keys.forEach(function(f){f.classList.toggle("on",f.dataset.k===k)})};
+  keys.forEach(function(f){
+    f.addEventListener("mouseenter",function(){if(!hlPin)showHl(f.dataset.k)});
+    f.addEventListener("mouseleave",function(){if(!hlPin)showHl(null)});
+    f.addEventListener("focus",function(){showHl(f.dataset.k)});
+    f.addEventListener("blur",function(){if(!hlPin)showHl(null)});
+    f.addEventListener("click",function(){hlPin=hlPin===f.dataset.k?null:f.dataset.k;showHl(hlPin)});
   });
 
-  /* 4 · 휴대폰: 스크롤하면 겹쳐 있던 화면이 펼쳐진다 */
-  var fan=$("#fan"),phones=[].slice.call(document.querySelectorAll(".phone"));
-  var fanTick=function(){var r=fan.getBoundingClientRect(),p=reduce?1:clamp((innerHeight-r.top)/(innerHeight*0.9),0,1),k=1-p;
-    phones.forEach(function(ph){var t=+ph.dataset.tilt;ph.style.transform="translateX("+(-t*k*62)+"%) rotate("+(t*k*9)+"deg) translateY("+(t===0?-28:k*24)+"px)";ph.style.zIndex=t===0?2:1})};
+  /* Share 띠: 화면 폭에 맞게 카드를 복제해 어느 폭에서도 끊기지 않게 이어 붙이고, 한 벌만큼 밀리면 처음으로 돌아간다 */
+  var rails=[].slice.call(document.querySelectorAll(".rail"));
+  var buildRail=function(rail){
+    var track=rail.querySelector(".track"),orig=[].slice.call(track.querySelectorAll(".story:not([aria-hidden])"));
+    [].slice.call(track.querySelectorAll(".story[aria-hidden]")).forEach(function(n){n.remove()});
+    orig.forEach(function(n,i){n.classList.toggle("lo",i%2===1)});
+    [].slice.call(track.querySelectorAll(".story.clone")).forEach(function(n){n.remove()});
+    var gap=parseFloat(getComputedStyle(track).columnGap)||22,w=orig.reduce(function(t,n){return t+n.offsetWidth+gap},0);
+    if(!w)return;
+    var need=Math.ceil((rail.clientWidth*2)/w)+1;
+    for(var k=0;k<need;k++)orig.forEach(function(n){var c=n.cloneNode(true);c.classList.add("clone");c.setAttribute("aria-hidden","true");var im=c.querySelector("img");if(im)im.alt="";track.appendChild(c)});
+    track.style.setProperty("--shift",(-w)+"px");
+    track.style.setProperty("--dur",(w/34)+"s");
+  };
+  rails.forEach(buildRail);
+  var railT=0;addEventListener("resize",function(){clearTimeout(railT);railT=setTimeout(function(){rails.forEach(buildRail)},200)});
 
-  /* 5 · 군도: 앱과 같은 배치 공식(Models/ArchipelagoLayout.swift, 씨앗 202643) */
-  var arch=$("#arch"),wk=$("#week");
-  var rng=function(seed){var a=seed>>>0;return function(){a=(a+0x6D2B79F5)>>>0;var t=a;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return((t^(t>>>14))>>>0)/4294967296}};
-  var gauss=function(r){var u=Math.max(r(),1e-9),v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v)};
-  var layout=function(seed,Wd,Sz){var dx=Sz*1.054,dy=Sz*.964,cx=Wd/2,cy=Sz/2+dy,r=rng(seed);
-    var p=[[cx-dx/2,cy-dy],[cx+dx/2,cy-dy],[cx-dx,cy],[cx,cy],[cx+dx,cy],[cx-dx/2,cy+dy],[cx+dx/2,cy+dy]].map(function(q){return[q[0]+gauss(r)*Sz*.10,q[1]+gauss(r)*Sz*.05]});
-    var MIN=Sz*.88;for(var it=0;it<20;it++)for(var i=0;i<7;i++)for(var j=i+1;j<7;j++){var vx=p[j][0]-p[i][0],vy=p[j][1]-p[i][1],d=Math.hypot(vx,vy)||1;if(d<MIN){var k=(MIN-d)/2/d;p[i][0]-=vx*k;p[i][1]-=vy*k;p[j][0]+=vx*k;p[j][1]+=vy*k}}
-    var H=Sz+2*dy;return{p:p.map(function(q){return[clamp(q[0],Sz/2,Wd-Sz/2),clamp(q[1],Sz/2,H-Sz/2)]}),H:H}};
-  var Wd=370,Sz=108,L=layout(202643,Wd,Sz),names=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  arch.style.aspectRatio=Wd+" / "+L.H;
-  var days=L.p.map(function(q,i){var d=document.createElement("div");d.className="day";d.style.left=(q[0]/Wd*100)+"%";d.style.top=(q[1]/L.H*100)+"%";d.style.width=(Sz/Wd*100)+"%";
-    d.innerHTML='<img src="/img/v2/week/d'+(i+1)+'.webp" alt="" width="360" height="360" loading="lazy"><span aria-hidden="true">'+names[i]+'</span>';arch.appendChild(d);return d});
-  var weekTick=function(){var p=reduce?1:progress(wk);
-    days.forEach(function(d,i){var s=clamp((p*2.4+.3-i*.09)/.45,0,1),e=1-Math.pow(1-s,3),ang=i*0.9+0.4,dist=(1-e)*160;
-      d.style.transform="translate(-50%,-50%) translate("+(Math.cos(ang)*dist)+"%,"+(Math.sin(ang)*dist+(1-e)*60)+"%) scale("+(.55+.45*e)+")";d.style.opacity=String(e)})};
-
-  /* 6 · 공유: 탭과 기울이기 */
-  var tabs=[$("#tabToday"),$("#tabWeek")],panels=[$("#shareToday"),$("#shareWeek")];
-  tabs.forEach(function(t,i){t.addEventListener("click",function(){tabs.forEach(function(x,k){x.setAttribute("aria-selected",String(k===i));panels[k].hidden=k!==i})})});
-  if(!reduce)document.querySelectorAll(".card .tilt").forEach(function(c){
-    c.addEventListener("pointermove",function(e){var r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;c.style.transform="perspective(900px) rotateY("+(x*16)+"deg) rotateX("+(-y*16)+"deg) scale(1.02)"});
-    c.addEventListener("pointerleave",function(){c.style.transform=""});
-  });
+  /* Stats: Week · Month · Year를 고르고, 폰에서 반짝이는 자리를 누르면 하단 시트가 열린다(시트의 X로 닫는다) */
+  (function(){
+    var sec=$("#stats");if(!sec)return;
+    var imgs=[].slice.call(sec.querySelectorAll(".screen img.s")),sheets=[].slice.call(sec.querySelectorAll(".screen img.sh")),sdim=sec.querySelector(".sdim"),segs=[].slice.call(sec.querySelectorAll(".seg")),rows=[].slice.call(sec.querySelectorAll(".tpl")),spots=[].slice.call(sec.querySelectorAll(".spot:not(.close)")),closeBtn=sec.querySelector(".spot.close");
+    var base=0,open=false,touched=false,vis=false;
+    var paint=function(){
+      imgs.forEach(function(im,k){im.classList.toggle("on",k===base)});
+      sheets.forEach(function(im,k){im.classList.toggle("up",open&&k===base)});sdim.classList.toggle("on",open);
+            segs.forEach(function(b,k){b.setAttribute("aria-pressed",String(k===base))});rows.forEach(function(r,k){r.setAttribute("aria-pressed",String(k===base))});
+      spots.forEach(function(sp,k){sp.classList.toggle("show",k===base&&!open)});
+      closeBtn.classList.toggle("show",open);
+    };
+    var pick=function(i){base=i;open=false;paint()};
+    [].slice.call(sec.querySelectorAll(".seg")).forEach(function(b){b.addEventListener("click",function(){touched=true;pick(+b.dataset.s)})});
+    rows.forEach(function(r,i){r.addEventListener("click",function(){touched=true;pick(i)});r.addEventListener("mouseenter",function(){touched=true;pick(i)})});
+    spots.forEach(function(sp){sp.addEventListener("click",function(){touched=true;open=true;paint()})});
+    closeBtn.addEventListener("click",function(){touched=true;open=false;paint()});
+    if("IntersectionObserver" in window)new IntersectionObserver(function(es){vis=es[0].isIntersecting}).observe(sec);
+    if(!reduce)setInterval(function(){if(vis&&!touched)pick((base+1)%3)},3600);
+    paint();
+  })();
 
   /* 나타나기 */
   var rv=[].slice.call(document.querySelectorAll(".reveal"));
@@ -562,11 +651,9 @@
   if("IntersectionObserver" in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12});rv.forEach(function(el){io.observe(el)})}else rv.forEach(function(el){el.classList.add("in")});
 
   var ticking=false;
-  var onScroll=function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){ticking=false;nav.classList.toggle("solid",scrollY>40);heroTick();fanTick();weekTick()})};
+  var onScroll=function(){if(ticking)return;ticking=true;requestAnimationFrame(function(){ticking=false;nav.classList.toggle("solid",scrollY>40);heroTick()})};
   addEventListener("scroll",onScroll,{passive:true});addEventListener("resize",onScroll);
   onScroll();
-  // 첫 화면: 0.4초 뒤 3.2초 동안 하루를 채운다(앞뒤 천천히)
-  if(!reduce){var iT0=performance.now()+400,introStep=function(now){var t=clamp((now-iT0)/3200,0,1);intro=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;heroTick();if(t<1)requestAnimationFrame(introStep)};requestAnimationFrame(introStep)}
 })();
 </script>
 <!-- Cloudflare Web Analytics -->
